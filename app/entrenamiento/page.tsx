@@ -1,6 +1,7 @@
 import { createSupabaseServerClient } from '@/lib/supabase/server'
 import { isUserSubscribed } from '@/lib/subscription'
 import { getWeekWorkout } from '@/lib/actions/workout'
+import { SubscribeButton } from './subscribe-button'
 
 export default async function EntrenamientoPage() {
   const supabase = await createSupabaseServerClient()
@@ -62,27 +63,3 @@ export default async function EntrenamientoPage() {
   )
 }
 
-function SubscribeButton() {
-  return (
-    <form
-      action={async () => {
-        'use server'
-        const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/stripe/checkout`, {
-          method: 'POST',
-        })
-        const { url } = await res.json()
-        if (url) {
-          const { redirect } = await import('next/navigation')
-          redirect(url)
-        }
-      }}
-    >
-      <button
-        type="submit"
-        className="mt-2 px-4 py-2 bg-black text-white rounded-md text-sm hover:bg-gray-800"
-      >
-        Suscribirse
-      </button>
-    </form>
-  )
-}

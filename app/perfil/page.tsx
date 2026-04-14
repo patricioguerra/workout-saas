@@ -2,6 +2,7 @@ import { createSupabaseServerClient } from '@/lib/supabase/server'
 import { getUserSubscription } from '@/lib/subscription'
 import { signOut } from '@/lib/actions/auth'
 import { redirect } from 'next/navigation'
+import { PortalButton } from './portal-button'
 
 export default async function PerfilPage() {
   const supabase = await createSupabaseServerClient()
@@ -10,18 +11,6 @@ export default async function PerfilPage() {
   if (!user) redirect('/login')
 
   const subscription = await getUserSubscription(user.id)
-
-  async function handlePortal() {
-    'use server'
-    const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/stripe/portal`, {
-      method: 'POST',
-    })
-    const { url } = await res.json()
-    if (url) {
-      const { redirect } = await import('next/navigation')
-      redirect(url)
-    }
-  }
 
   return (
     <div className="max-w-lg mx-auto py-12 px-4 space-y-8">
@@ -46,16 +35,7 @@ export default async function PerfilPage() {
       </div>
 
       <div className="space-y-3">
-        {subscription && (
-          <form action={handlePortal}>
-            <button
-              type="submit"
-              className="w-full py-2 border rounded-md hover:bg-gray-50"
-            >
-              Gestionar suscripcion
-            </button>
-          </form>
-        )}
+        {subscription && <PortalButton />}
 
         <form action={signOut}>
           <button
