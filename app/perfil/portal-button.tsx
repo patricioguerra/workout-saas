@@ -12,7 +12,7 @@ export function PortalButton() {
   return (
     <button
       onClick={handlePortal}
-      className="w-full py-2 border rounded-md hover:bg-gray-50"
+      className="w-full py-3 rounded-xl glass hover:bg-white/10 transition-colors"
     >
       Gestionar suscripcion
     </button>

@@ -6,25 +6,25 @@ export async function Navbar() {
   const { data: { user } } = await supabase.auth.getUser()
 
   return (
-    <nav className="border-b px-4 py-3 flex items-center justify-between">
+    <nav className="px-4 py-3 flex items-center justify-between border-b border-white/10">
       <div className="flex items-center gap-6">
-        <Link href="/" className="font-bold text-lg">
+        <Link href="/" className="font-bold text-lg text-white">
           Workout
         </Link>
-        <Link href="/entrenamiento" className="text-sm hover:underline">
+        <Link href="/entrenamiento" className="text-sm text-muted hover:text-white transition-colors">
           Entrenamiento
         </Link>
       </div>
 
       <div className="flex items-center gap-4">
         {user ? (
-          <Link href="/perfil" className="text-sm hover:underline">
+          <Link href="/perfil" className="text-sm text-muted hover:text-white transition-colors">
             {user.email}
           </Link>
         ) : (
           <Link
             href="/login"
-            className="text-sm px-4 py-1.5 bg-black text-white rounded-md hover:bg-gray-800"
+            className="text-sm px-4 py-1.5 rounded-lg btn-gradient"
           >
             Entrar
           </Link>

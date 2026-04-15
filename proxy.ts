@@ -26,14 +26,31 @@ export async function proxy(request: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser()
 
   const path = request.nextUrl.pathname
+  const onboardingCompleted = user?.user_metadata?.onboarding_completed === true
 
-  // Protected routes: require auth
-  if (path.startsWith('/perfil') && !user) {
-    return NextResponse.redirect(new URL('/login', request.url))
+  // --- Unauthenticated users ---
+  if (!user) {
+    if (path.startsWith('/perfil') || path.startsWith('/onboarding')) {
+      return NextResponse.redirect(new URL('/login', request.url))
+    }
+    return response
   }
 
-  // Auth routes: redirect if already logged in
-  if (path === '/login' && user) {
+  // --- Authenticated users ---
+
+  // Already logged in, redirect away from login
+  if (path === '/login') {
+    const destination = onboardingCompleted ? '/entrenamiento' : '/onboarding'
+    return NextResponse.redirect(new URL(destination, request.url))
+  }
+
+  // Onboarding not completed: force to /onboarding
+  if (!onboardingCompleted && !path.startsWith('/onboarding')) {
+    return NextResponse.redirect(new URL('/onboarding', request.url))
+  }
+
+  // Onboarding completed: prevent going back to /onboarding
+  if (onboardingCompleted && path.startsWith('/onboarding')) {
     return NextResponse.redirect(new URL('/entrenamiento', request.url))
   }
 
@@ -41,5 +58,10 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/perfil/:path*', '/login'],
+  matcher: [
+    '/perfil/:path*',
+    '/login',
+    '/onboarding/:path*',
+    '/entrenamiento/:path*',
+  ],
 }

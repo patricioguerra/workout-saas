@@ -16,21 +16,31 @@ export default async function PerfilPage() {
     <div className="max-w-lg mx-auto py-12 px-4 space-y-8">
       <h1 className="text-2xl font-bold">Perfil</h1>
 
-      <div className="space-y-2">
-        <p><span className="font-medium">Email:</span> {user.email}</p>
+      <div className="glass rounded-xl p-5 space-y-3">
         <p>
-          <span className="font-medium">Suscripcion:</span>{' '}
+          <span className="text-muted text-sm">Email</span>
+          <br />
+          {user.email}
+        </p>
+        <div className="border-t border-white/10" />
+        <p>
+          <span className="text-muted text-sm">Suscripcion</span>
+          <br />
           {subscription ? (
-            <span className="text-green-600">Activa</span>
+            <span className="text-green-400">Activa</span>
           ) : (
-            <span className="text-gray-500">Sin suscripcion</span>
+            <span className="text-muted">Sin suscripcion</span>
           )}
         </p>
         {subscription && (
-          <p className="text-sm text-gray-500">
-            Siguiente renovacion:{' '}
-            {new Date(subscription.current_period_end).toLocaleDateString('es-ES')}
-          </p>
+          <>
+            <div className="border-t border-white/10" />
+            <p>
+              <span className="text-muted text-sm">Siguiente renovacion</span>
+              <br />
+              {new Date(subscription.current_period_end).toLocaleDateString('es-ES')}
+            </p>
+          </>
         )}
       </div>
 
@@ -40,7 +50,7 @@ export default async function PerfilPage() {
         <form action={signOut}>
           <button
             type="submit"
-            className="w-full py-2 text-red-500 border border-red-200 rounded-md hover:bg-red-50"
+            className="w-full py-3 rounded-xl text-red-400 glass hover:bg-white/10 transition-colors"
           >
             Cerrar sesion
           </button>

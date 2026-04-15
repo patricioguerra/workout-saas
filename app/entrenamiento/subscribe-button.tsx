@@ -1,6 +1,14 @@
 'use client'
 
-export function SubscribeButton() {
+interface SubscribeButtonProps {
+  className?: string
+  label?: string
+}
+
+export function SubscribeButton({
+  className = "mt-2 px-4 py-2 bg-black text-white rounded-md text-sm hover:bg-gray-800",
+  label = "Suscribirse",
+}: SubscribeButtonProps) {
   async function handleSubscribe() {
     const res = await fetch('/api/stripe/checkout', { method: 'POST' })
     const { url } = await res.json()
@@ -10,11 +18,8 @@ export function SubscribeButton() {
   }
 
   return (
-    <button
-      onClick={handleSubscribe}
-      className="mt-2 px-4 py-2 bg-black text-white rounded-md text-sm hover:bg-gray-800"
-    >
-      Suscribirse
+    <button onClick={handleSubscribe} className={className}>
+      {label}
     </button>
   )
 }

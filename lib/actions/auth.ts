@@ -22,7 +22,7 @@ export async function signUp(formData: FormData) {
     return { error: error.message }
   }
 
-  redirect('/entrenamiento')
+  redirect('/onboarding')
 }
 
 export async function signIn(formData: FormData) {
@@ -40,6 +40,7 @@ export async function signIn(formData: FormData) {
     return { error: error.message }
   }
 
+  // Proxy handles redirect based on onboarding status
   redirect('/entrenamiento')
 }
 
