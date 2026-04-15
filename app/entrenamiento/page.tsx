@@ -3,17 +3,42 @@ import { isUserSubscribed } from '@/lib/subscription'
 import { getWeekWorkout } from '@/lib/actions/workout'
 import { SubscribeButton } from './subscribe-button'
 
-interface Ejercicio {
+interface WarmupExercise {
+  nombre: string
+  repeticiones: string
+  notas?: string
+}
+
+interface FuerzaExercise {
   nombre: string
   series: number
   repeticiones: string
-  descanso: string
-  notas: string
+  tempo?: string
+  peso?: string
+  notas?: string
+}
+
+interface WodExercise {
+  nombre: string
+  repeticiones: string
+  peso?: string
+  notas?: string
+}
+
+interface Wod {
+  tipo: string
+  cap?: string
+  descripcion: string
+  ejercicios: WodExercise[]
+  notas?: string
 }
 
 interface DayContent {
   titulo: string
-  ejercicios: Ejercicio[]
+  warmup?: WarmupExercise[]
+  fuerza?: FuerzaExercise[]
+  wod?: Wod
+  recuperacion?: string
 }
 
 export default async function EntrenamientoPage() {
@@ -88,24 +113,68 @@ export default async function EntrenamientoPage() {
                 <p className="text-accent text-xs mt-0.5">{dayContent.titulo}</p>
               )}
 
-              {dayContent?.ejercicios && dayContent.ejercicios.length > 0 ? (
-                <div className="mt-3 space-y-2.5">
-                  {dayContent.ejercicios.map((ej, i) => (
-                    <div key={i} className="flex items-start justify-between gap-2 py-1.5 border-t border-white/5 first:border-0 first:pt-0">
-                      <div className="min-w-0">
-                        <p className="text-sm font-medium">{ej.nombre}</p>
-                        {ej.notas && (
-                          <p className="text-muted text-xs mt-0.5">{ej.notas}</p>
-                        )}
-                      </div>
-                      <div className="text-right shrink-0">
-                        <p className="text-xs text-muted">
-                          {ej.series}x{ej.repeticiones}
-                        </p>
-                        <p className="text-xs text-muted">{ej.descanso}</p>
+              {dayContent?.recuperacion ? (
+                <p className="text-muted text-sm mt-2">{dayContent.recuperacion}</p>
+              ) : dayContent ? (
+                <div className="mt-3 space-y-4">
+                  {/* Warm-up */}
+                  {dayContent.warmup && dayContent.warmup.length > 0 && (
+                    <div>
+                      <p className="text-xs font-semibold text-accent-purple uppercase tracking-wider mb-1.5">Warm-up</p>
+                      <div className="space-y-1">
+                        {dayContent.warmup.map((ex, i) => (
+                          <div key={i} className="flex justify-between text-sm">
+                            <span>{ex.nombre}</span>
+                            <span className="text-muted text-xs">{ex.repeticiones}</span>
+                          </div>
+                        ))}
                       </div>
                     </div>
-                  ))}
+                  )}
+
+                  {/* Fuerza */}
+                  {dayContent.fuerza && dayContent.fuerza.length > 0 && (
+                    <div>
+                      <p className="text-xs font-semibold text-accent uppercase tracking-wider mb-1.5">Fuerza</p>
+                      <div className="space-y-2">
+                        {dayContent.fuerza.map((ex, i) => (
+                          <div key={i} className="py-1.5 border-t border-white/5 first:border-0 first:pt-0">
+                            <div className="flex items-start justify-between gap-2">
+                              <p className="text-sm font-medium">{ex.nombre}</p>
+                              <div className="text-right shrink-0">
+                                <p className="text-xs text-muted">{ex.series}x{ex.repeticiones}</p>
+                                {ex.peso && <p className="text-xs text-muted">{ex.peso}</p>}
+                              </div>
+                            </div>
+                            {ex.tempo && <p className="text-muted text-xs mt-0.5">{ex.tempo}</p>}
+                            {ex.notas && <p className="text-muted text-xs mt-0.5">{ex.notas}</p>}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* WOD */}
+                  {dayContent.wod && (
+                    <div>
+                      <p className="text-xs font-semibold text-accent uppercase tracking-wider mb-1.5">WOD</p>
+                      <p className="text-sm font-medium mb-2">{dayContent.wod.descripcion}</p>
+                      <div className="space-y-1.5">
+                        {dayContent.wod.ejercicios.map((ex, i) => (
+                          <div key={i} className="flex justify-between text-sm">
+                            <div className="min-w-0">
+                              <span>{ex.repeticiones} {ex.nombre}</span>
+                              {ex.notas && <span className="text-muted text-xs ml-1">({ex.notas})</span>}
+                            </div>
+                            {ex.peso && <span className="text-muted text-xs shrink-0">{ex.peso}</span>}
+                          </div>
+                        ))}
+                      </div>
+                      {dayContent.wod.notas && (
+                        <p className="text-muted text-xs mt-2 italic">{dayContent.wod.notas}</p>
+                      )}
+                    </div>
+                  )}
                 </div>
               ) : (
                 <p className="text-muted text-sm mt-2">Descanso</p>

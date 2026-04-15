@@ -11,9 +11,14 @@ export async function createSupabaseServerClient() {
       cookies: {
         getAll: () => cookieStore.getAll(),
         setAll: (cookiesToSet) => {
-          cookiesToSet.forEach(({ name, value, options }) =>
-            cookieStore.set(name, value, options)
-          )
+          try {
+            cookiesToSet.forEach(({ name, value, options }) =>
+              cookieStore.set(name, value, options)
+            )
+          } catch {
+            // Called from Server Component — read-only context, safe to ignore.
+            // Session refresh will happen in proxy or next Server Action call.
+          }
         },
       },
     }

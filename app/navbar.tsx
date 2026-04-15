@@ -18,8 +18,18 @@ export async function Navbar() {
 
       <div className="flex items-center gap-4">
         {user ? (
-          <Link href="/perfil" className="text-sm text-muted hover:text-white transition-colors">
-            {user.email}
+          <Link href="/perfil" className="block w-8 h-8 rounded-full overflow-hidden glass">
+            {user.user_metadata?.avatar_url ? (
+              <img
+                src={user.user_metadata.avatar_url}
+                alt="Avatar"
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center text-muted text-sm font-medium">
+                {(user.email?.[0] || '?').toUpperCase()}
+              </div>
+            )}
           </Link>
         ) : (
           <Link

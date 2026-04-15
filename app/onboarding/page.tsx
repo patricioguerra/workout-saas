@@ -1,9 +1,11 @@
 'use client'
 
-import { useState, useTransition, ViewTransition } from 'react'
-import { completeOnboarding } from '@/lib/actions/onboarding'
+import { useState, useRef, useTransition, ViewTransition } from 'react'
+import { completeOnboarding, markOnboardingComplete } from '@/lib/actions/onboarding'
+import { saveAvatarUrl } from '@/lib/actions/avatar'
+import { createSupabaseBrowserClient } from '@/lib/supabase/client'
 
-const TOTAL_STEPS = 6
+const TOTAL_STEPS = 7
 
 function ProgressDots({ current, total }: { current: number; total: number }) {
   return (
@@ -72,7 +74,10 @@ export default function OnboardingPage() {
     if (result?.error) {
       setError(result.error)
       setLoading(false)
+      return
     }
+    setLoading(false)
+    goNext()
   }
 
   async function handleSubscribe() {
@@ -177,6 +182,12 @@ export default function OnboardingPage() {
               />
             )}
             {step === 5 && (
+              <StepAvatar
+                onNext={goNext}
+                onSkip={goNext}
+              />
+            )}
+            {step === 6 && (
               <StepPayment
                 onSubscribe={handleSubscribe}
               />
@@ -253,7 +264,7 @@ function StepInput({
           min={min}
           max={max}
           step={step}
-          autoFocus
+          autoComplete="off"
           className="w-full px-4 py-3.5 rounded-xl text-base input-glass"
         />
         {suffix && (
@@ -330,6 +341,124 @@ function StepSex({
       >
         {loading ? 'Guardando...' : 'Siguiente'}
       </button>
+    </div>
+  )
+}
+
+function StepAvatar({ onNext, onSkip }: { onNext: () => void; onSkip: () => void }) {
+  const [preview, setPreview] = useState<string | null>(null)
+  const [uploading, setUploading] = useState(false)
+  const [uploaded, setUploaded] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  async function handleFile(file: File) {
+    if (!file.type.startsWith('image/')) {
+      setError('Selecciona una imagen')
+      return
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      setError('Maximo 5MB')
+      return
+    }
+
+    setPreview(URL.createObjectURL(file))
+    setUploading(true)
+    setError(null)
+
+    const supabase = createSupabaseBrowserClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) { setError('No autenticado'); setUploading(false); return }
+
+    const ext = file.name.split('.').pop()?.toLowerCase() || 'jpg'
+    const path = `${user.id}/avatar.${ext}`
+
+    const { error: uploadError } = await supabase.storage
+      .from('avatars')
+      .upload(path, file, { upsert: true })
+
+    if (uploadError) {
+      setError(uploadError.message)
+      setPreview(null)
+      setUploading(false)
+      return
+    }
+
+    const { data: { publicUrl } } = supabase.storage
+      .from('avatars')
+      .getPublicUrl(path)
+
+    const result = await saveAvatarUrl(publicUrl)
+    if (result?.error) {
+      setError(result.error)
+      setPreview(null)
+    } else {
+      setUploaded(true)
+    }
+    setUploading(false)
+  }
+
+  async function handleNext() {
+    await markOnboardingComplete()
+    onNext()
+  }
+
+  async function handleSkip() {
+    await markOnboardingComplete()
+    onSkip()
+  }
+
+  return (
+    <div className="space-y-8 text-center">
+      <div className="space-y-2">
+        <h2 className="text-2xl font-bold">Tu foto de perfil</h2>
+        <p className="text-muted text-sm">Opcional — puedes añadirla despues</p>
+      </div>
+
+      {error && <p className="text-red-400 text-sm">{error}</p>}
+
+      <div className="flex justify-center">
+        <button
+          type="button"
+          onClick={() => inputRef.current?.click()}
+          className="w-28 h-28 rounded-full glass flex items-center justify-center overflow-hidden"
+        >
+          {preview ? (
+            <img src={preview} alt="Avatar" className="w-full h-full object-cover" />
+          ) : (
+            <svg className="w-10 h-10 text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+            </svg>
+          )}
+        </button>
+        <input
+          ref={inputRef}
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={(e) => e.target.files?.[0] && handleFile(e.target.files[0])}
+        />
+      </div>
+
+      <div className="space-y-3">
+        <button
+          type="button"
+          onClick={handleNext}
+          disabled={uploading}
+          className="w-full py-3.5 rounded-xl text-base font-semibold btn-gradient"
+        >
+          {uploading ? 'Subiendo...' : 'Siguiente'}
+        </button>
+        {!uploaded && (
+          <button
+            type="button"
+            onClick={handleSkip}
+            className="w-full py-3 text-sm text-muted hover:text-white transition-colors"
+          >
+            Omitir
+          </button>
+        )}
+      </div>
     </div>
   )
 }

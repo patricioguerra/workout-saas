@@ -41,7 +41,7 @@ export async function POST() {
         quantity: 1,
       },
     ],
-    success_url: `${process.env.NEXT_PUBLIC_APP_URL}/entrenamiento?success=true`,
+    success_url: `${process.env.NEXT_PUBLIC_APP_URL}/bienvenida`,
     cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/entrenamiento?canceled=true`,
   })
 

@@ -42,6 +42,13 @@ body {
   border: 1px solid var(--glass-border);
 }
 
+/* Ensure all buttons/links are tappable on mobile + pointer cursor */
+button, a, [role="button"] {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
 /* Gradient button */
 .btn-gradient {
   background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-purple) 100%);

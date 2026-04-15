@@ -1,6 +1,5 @@
 'use server'
 
-import { redirect } from 'next/navigation'
 import { createSupabaseServerClient } from '../supabase/server'
 
 export async function completeOnboarding(formData: FormData) {
@@ -28,7 +27,7 @@ export async function completeOnboarding(formData: FormData) {
     return { error: 'Peso debe estar entre 30 y 300 kg' }
   }
 
-  // Update profile in DB
+  // Save profile data without marking onboarding as complete
   const { error: profileError } = await supabase
     .from('profiles')
     .update({
@@ -36,7 +35,6 @@ export async function completeOnboarding(formData: FormData) {
       age,
       weight,
       sex,
-      onboarding_completed: true,
       updated_at: new Date().toISOString(),
     })
     .eq('id', user.id)
@@ -45,10 +43,25 @@ export async function completeOnboarding(formData: FormData) {
     return { error: profileError.message }
   }
 
-  // Update user_metadata so proxy can check without DB query
+  return { success: true }
+}
+
+export async function markOnboardingComplete() {
+  const supabase = await createSupabaseServerClient()
+
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return { error: 'No autenticado' }
+
+  const { error } = await supabase
+    .from('profiles')
+    .update({ onboarding_completed: true, updated_at: new Date().toISOString() })
+    .eq('id', user.id)
+
+  if (error) return { error: error.message }
+
   await supabase.auth.updateUser({
     data: { onboarding_completed: true },
   })
 
-  redirect('/onboarding/pago')
+  return { success: true }
 }
