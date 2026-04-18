@@ -1,8 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import { signIn, signUp } from '@/lib/actions/auth'
-import { createSupabaseBrowserClient } from '@/lib/supabase/client'
+import { signIn } from '@/modules/identity/application/sign-in'
+import { signUp } from '@/modules/identity/application/sign-up'
+import { createSupabaseBrowserClient } from '@/shared/infra/supabase/client'
 
 export default function LoginPage() {
   const [isSignUp, setIsSignUp] = useState(false)

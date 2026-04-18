@@ -10,10 +10,18 @@ export function SubscribeButton({
   label = "Suscribirse",
 }: SubscribeButtonProps) {
   async function handleSubscribe() {
-    const res = await fetch('/api/stripe/checkout', { method: 'POST' })
-    const { url } = await res.json()
-    if (url) {
-      window.location.href = url
+    try {
+      const res = await fetch('/api/stripe/checkout', { method: 'POST' })
+      const data = await res.json()
+      if (data.url) {
+        window.location.href = data.url
+      } else {
+        console.error('Checkout error:', data.error)
+        alert(data.error || 'Error al crear la sesion de pago')
+      }
+    } catch (err) {
+      console.error('Fetch error:', err)
+      alert('Error de conexion')
     }
   }
 

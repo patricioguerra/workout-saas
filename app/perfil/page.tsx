@@ -1,16 +1,14 @@
-import { createSupabaseServerClient } from '@/lib/supabase/server'
-import { getUserSubscription } from '@/lib/subscription'
-import { signOut } from '@/lib/actions/auth'
 import { redirect } from 'next/navigation'
+import { getCurrentUser } from '@/modules/identity/application/get-current-user'
+import { signOut } from '@/modules/identity/application/sign-out'
+import { getActiveSubscription } from '@/modules/billing/infra/subscription-repository'
 import { PortalButton } from './portal-button'
 
 export default async function PerfilPage() {
-  const supabase = await createSupabaseServerClient()
-  const { data: { user } } = await supabase.auth.getUser()
-
+  const user = await getCurrentUser()
   if (!user) redirect('/login')
 
-  const subscription = await getUserSubscription(user.id)
+  const subscription = await getActiveSubscription(user.id)
 
   return (
     <div className="max-w-lg mx-auto py-12 px-4 space-y-8">
@@ -38,7 +36,9 @@ export default async function PerfilPage() {
             <p>
               <span className="text-muted text-sm">Siguiente renovacion</span>
               <br />
-              {new Date(subscription.current_period_end).toLocaleDateString('es-ES')}
+              {subscription.current_period_end
+                ? new Date(subscription.current_period_end).toLocaleDateString('es-ES')
+                : '—'}
             </p>
           </>
         )}

@@ -1,52 +1,40 @@
-import { createSupabaseServerClient } from '@/lib/supabase/server'
-import { isUserSubscribed } from '@/lib/subscription'
-import { getWeekWorkout } from '@/lib/actions/workout'
+import { getCurrentUser } from '@/modules/identity/application/get-current-user'
+import { isUserSubscribed } from '@/modules/billing/application/get-subscription-status'
+import { getCurrentWeekWorkout } from '@/modules/training/application/get-current-week-workout'
+import { isFreeWeek as isFreeCycleWeek } from '@/modules/training/domain/cycle'
 import { SubscribeButton } from './subscribe-button'
 
-interface WarmupExercise {
-  nombre: string
-  repeticiones: string
-  notas?: string
-}
-
-interface FuerzaExercise {
-  nombre: string
-  series: number
-  repeticiones: string
-  tempo?: string
-  peso?: string
-  notas?: string
-}
-
-interface WodExercise {
-  nombre: string
-  repeticiones: string
-  peso?: string
-  notas?: string
-}
-
-interface Wod {
-  tipo: string
-  cap?: string
-  descripcion: string
-  ejercicios: WodExercise[]
-  notas?: string
-}
-
-interface DayContent {
-  titulo: string
-  warmup?: WarmupExercise[]
-  fuerza?: FuerzaExercise[]
-  wod?: Wod
-  recuperacion?: string
-}
-
 export default async function EntrenamientoPage() {
-  const supabase = await createSupabaseServerClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const user = await getCurrentUser()
 
-  const subscribed = user ? await isUserSubscribed(user.id) : false
-  const workout = await getWeekWorkout()
+  // Not registered: CTA to sign up
+  if (!user) {
+    return (
+      <div className="max-w-lg mx-auto py-12 px-4">
+        <div className="glass rounded-xl p-8 text-center space-y-6">
+          <div className="text-5xl">💪</div>
+          <div className="space-y-2">
+            <h1 className="text-2xl font-bold">Tu plan personalizado te espera</h1>
+            <p className="text-muted text-sm">
+              Registrate para acceder a un ciclo de 6 semanas adaptado a tu nivel y categoria.
+            </p>
+          </div>
+          <div className="space-y-3">
+            <a
+              href="/login"
+              className="block w-full py-3.5 rounded-xl text-base font-semibold btn-gradient"
+            >
+              Empezar ahora
+            </a>
+            <p className="text-muted text-xs">Primera semana gratis</p>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  const subscribed = await isUserSubscribed(user.id)
+  const workout = await getCurrentWeekWorkout()
 
   const days = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo']
 
@@ -56,55 +44,52 @@ export default async function EntrenamientoPage() {
         <h1 className="text-2xl font-bold mb-4">Entrenamiento semanal</h1>
         <div className="glass rounded-xl p-6 text-center">
           <p className="text-muted">
-            El entrenamiento de esta semana aun no esta disponible. Vuelve pronto.
+            Tu entrenamiento se esta preparando. Vuelve en unos momentos.
           </p>
         </div>
       </div>
     )
   }
 
-  const content = workout.content as Record<string, DayContent>
+  const cycleNumber = workout.cycle_number
+  const weekNumber = workout.week_number
+
+  const isBlocked = !subscribed && !isFreeCycleWeek({ cycleNumber, weekNumber })
+
+  // Blocked: paywall for week 2+ without subscription
+  if (isBlocked) {
+    return (
+      <div className="max-w-lg mx-auto py-12 px-4">
+        <div className="glass rounded-xl p-8 text-center space-y-6">
+          <div className="text-5xl">🔒</div>
+          <div className="space-y-2">
+            <h1 className="text-2xl font-bold">Continua tu ciclo</h1>
+            <p className="text-muted text-sm">
+              Has completado tu primera semana gratuita. Suscribete para acceder al resto del ciclo de 6 semanas.
+            </p>
+          </div>
+          <SubscribeButton
+            className="block w-full py-3.5 rounded-xl text-base font-semibold btn-gradient"
+            label="Suscribirse"
+          />
+        </div>
+      </div>
+    )
+  }
+
+  const content = workout.content
 
   return (
     <div className="max-w-lg mx-auto py-8 px-4">
       <h1 className="text-2xl font-bold mb-2">Entrenamiento semanal</h1>
       <p className="text-muted text-sm mb-6">
-        Semana del {new Date(workout.week_start).toLocaleDateString('es-ES', { day: 'numeric', month: 'long' })}
+        Semana {weekNumber} / 6 — Ciclo {cycleNumber}
       </p>
 
       <div className="space-y-4">
-        {days.map((day, index) => {
-          const dayKey = day.toLowerCase()
+        {days.map((day) => {
+          const dayKey = day.toLowerCase() as keyof typeof content
           const dayContent = content[dayKey]
-          const isLocked = index > 0 && !subscribed
-
-          if (isLocked) {
-            return (
-              <div key={day} className="glass rounded-xl p-4 opacity-60">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h2 className="font-semibold">{day}</h2>
-                    <p className="text-muted text-xs mt-0.5">
-                      {dayContent?.titulo || 'Descanso'}
-                    </p>
-                  </div>
-                  <span className="text-muted text-xs">🔒</span>
-                </div>
-                <div className="mt-3 pt-3 border-t border-white/10">
-                  {!user ? (
-                    <a href="/login" className="text-accent text-sm hover:underline">
-                      Inicia sesion para suscribirte
-                    </a>
-                  ) : (
-                    <SubscribeButton
-                      className="text-accent text-sm font-medium hover:underline"
-                      label="Desbloquear semana completa"
-                    />
-                  )}
-                </div>
-              </div>
-            )
-          }
 
           return (
             <div key={day} className="glass rounded-xl p-4">

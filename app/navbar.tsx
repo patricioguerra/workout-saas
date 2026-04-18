@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { createSupabaseServerClient } from '@/lib/supabase/server'
+import { createSupabaseServerClient } from '@/shared/infra/supabase/server'
 
 export async function Navbar() {
   const supabase = await createSupabaseServerClient()

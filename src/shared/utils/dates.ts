@@ -1,0 +1,19 @@
+export function getMondayOf(date: Date = new Date()): Date {
+  const d = new Date(date)
+  d.setHours(0, 0, 0, 0)
+  const day = d.getDay()
+  const diff = d.getDate() - day + (day === 0 ? -6 : 1)
+  d.setDate(diff)
+  return d
+}
+
+export function formatLocalDate(d: Date): string {
+  const y = d.getFullYear()
+  const m = String(d.getMonth() + 1).padStart(2, '0')
+  const day = String(d.getDate()).padStart(2, '0')
+  return `${y}-${m}-${day}`
+}
+
+export function getWeekStartDate(date: Date = new Date()): string {
+  return formatLocalDate(getMondayOf(date))
+}

@@ -1,11 +1,14 @@
 'use client'
 
 import { useState, useRef, useTransition, ViewTransition } from 'react'
-import { completeOnboarding, markOnboardingComplete } from '@/lib/actions/onboarding'
-import { saveAvatarUrl } from '@/lib/actions/avatar'
-import { createSupabaseBrowserClient } from '@/lib/supabase/client'
+import { saveBasicInfo } from '@/modules/onboarding/application/save-basic-info'
+import { saveCategory } from '@/modules/onboarding/application/save-category'
+import { saveFitnessData } from '@/modules/onboarding/application/save-fitness-data'
+import { completeOnboarding } from '@/modules/onboarding/application/complete-onboarding'
+import { updateAvatar } from '@/modules/identity/application/update-avatar'
+import { createSupabaseBrowserClient } from '@/shared/infra/supabase/client'
 
-const TOTAL_STEPS = 7
+const TOTAL_STEPS = 10
 
 function ProgressDots({ current, total }: { current: number; total: number }) {
   return (
@@ -38,6 +41,11 @@ export default function OnboardingPage() {
     age: '',
     weight: '',
     sex: '',
+    category: '',
+    rmStrictPress: '',
+    rmBackSquat: '',
+    rmDeadlift: '',
+    run5kMinutes: '',
   })
 
   function goNext() {
@@ -70,7 +78,41 @@ export default function OnboardingPage() {
     formData.set('weight', data.weight)
     formData.set('sex', data.sex)
 
-    const result = await completeOnboarding(formData)
+    const result = await saveBasicInfo(formData)
+    if (result?.error) {
+      setError(result.error)
+      setLoading(false)
+      return
+    }
+    setLoading(false)
+    goNext()
+  }
+
+  async function handleSaveCategory() {
+    setLoading(true)
+    setError(null)
+
+    const result = await saveCategory(data.category)
+    if (result?.error) {
+      setError(result.error)
+      setLoading(false)
+      return
+    }
+    setLoading(false)
+    goNext()
+  }
+
+  async function handleSaveFitness() {
+    setLoading(true)
+    setError(null)
+
+    const formData = new FormData()
+    formData.set('rmStrictPress', data.rmStrictPress)
+    formData.set('rmBackSquat', data.rmBackSquat)
+    formData.set('rmDeadlift', data.rmDeadlift)
+    formData.set('run5kMinutes', data.run5kMinutes)
+
+    const result = await saveFitnessData(formData)
     if (result?.error) {
       setError(result.error)
       setLoading(false)
@@ -81,10 +123,18 @@ export default function OnboardingPage() {
   }
 
   async function handleSubscribe() {
-    const res = await fetch('/api/stripe/checkout', { method: 'POST' })
-    const { url } = await res.json()
-    if (url) {
-      window.location.href = url
+    try {
+      const res = await fetch('/api/stripe/checkout', { method: 'POST' })
+      const data = await res.json()
+      if (data.url) {
+        window.location.href = data.url
+      } else {
+        console.error('Checkout error:', data.error)
+        alert(data.error || 'Error al crear la sesion de pago')
+      }
+    } catch (err) {
+      console.error('Fetch error:', err)
+      alert('Error de conexion')
     }
   }
 
@@ -94,6 +144,7 @@ export default function OnboardingPage() {
       case 2: return data.age !== '' && parseInt(data.age) >= 14 && parseInt(data.age) <= 100
       case 3: return data.weight !== '' && parseFloat(data.weight) >= 30 && parseFloat(data.weight) <= 300
       case 4: return data.sex !== ''
+      case 5: return data.category !== ''
       default: return true
     }
   }
@@ -182,12 +233,50 @@ export default function OnboardingPage() {
               />
             )}
             {step === 5 && (
+              <StepCategory
+                value={data.category}
+                onChange={(v) => updateField('category', v)}
+                onNext={handleSaveCategory}
+                canProceed={canProceed()}
+                loading={loading}
+                error={error}
+              />
+            )}
+            {step === 6 && (
+              <StepRM
+                values={{
+                  strictPress: data.rmStrictPress,
+                  backSquat: data.rmBackSquat,
+                  deadlift: data.rmDeadlift,
+                }}
+                onChange={(field, v) => {
+                  const map: Record<string, string> = {
+                    strictPress: 'rmStrictPress',
+                    backSquat: 'rmBackSquat',
+                    deadlift: 'rmDeadlift',
+                  }
+                  updateField(map[field], v)
+                }}
+                onNext={goNext}
+                onSkip={goNext}
+              />
+            )}
+            {step === 7 && (
+              <StepRun5K
+                value={data.run5kMinutes}
+                onChange={(v) => updateField('run5kMinutes', v)}
+                onNext={handleSaveFitness}
+                onSkip={() => { handleSaveFitness() }}
+                loading={loading}
+              />
+            )}
+            {step === 8 && (
               <StepAvatar
                 onNext={goNext}
                 onSkip={goNext}
               />
             )}
-            {step === 6 && (
+            {step === 9 && (
               <StepPayment
                 onSubscribe={handleSubscribe}
               />
@@ -345,6 +434,185 @@ function StepSex({
   )
 }
 
+function StepCategory({
+  value,
+  onChange,
+  onNext,
+  canProceed,
+  loading,
+  error,
+}: {
+  value: string
+  onChange: (v: string) => void
+  onNext: () => void
+  canProceed: boolean
+  loading: boolean
+  error: string | null
+}) {
+  const options = [
+    { value: 'athx', label: 'ATHX', desc: 'Categoria estandar' },
+    { value: 'athx_pro', label: 'ATHX PRO', desc: 'Avanzada — pesos mayores y dual dumbbell' },
+  ]
+
+  return (
+    <div className="space-y-8">
+      <div className="space-y-2">
+        <h2 className="text-2xl font-bold">Tu categoria</h2>
+        <p className="text-muted text-sm">En que categoria vas a competir?</p>
+      </div>
+
+      {error && <p className="text-red-400 text-sm text-center">{error}</p>}
+
+      <div className="space-y-3">
+        {options.map((opt) => (
+          <button
+            key={opt.value}
+            onClick={() => onChange(opt.value)}
+            className={`w-full px-4 py-4 rounded-xl text-left transition-all ${
+              value === opt.value
+                ? 'glass border-accent/50 text-white'
+                : 'glass text-muted hover:text-white'
+            }`}
+            style={value === opt.value ? { borderColor: 'var(--accent-orange)' } : undefined}
+          >
+            <p className="text-base font-semibold">{opt.label}</p>
+            <p className="text-xs text-muted mt-0.5">{opt.desc}</p>
+          </button>
+        ))}
+      </div>
+
+      <button
+        onClick={onNext}
+        disabled={!canProceed || loading}
+        className="w-full py-3.5 rounded-xl text-base font-semibold btn-gradient"
+      >
+        {loading ? 'Guardando...' : 'Siguiente'}
+      </button>
+    </div>
+  )
+}
+
+function StepRM({
+  values,
+  onChange,
+  onNext,
+  onSkip,
+}: {
+  values: { strictPress: string; backSquat: string; deadlift: string }
+  onChange: (field: string, v: string) => void
+  onNext: () => void
+  onSkip: () => void
+}) {
+  const fields = [
+    { key: 'strictPress', label: 'Strict Press' },
+    { key: 'backSquat', label: 'Back Squat' },
+    { key: 'deadlift', label: 'Deadlift' },
+  ]
+
+  const hasAny = Object.values(values).some((v) => v !== '')
+
+  return (
+    <div className="space-y-8">
+      <div className="space-y-2">
+        <h2 className="text-2xl font-bold">Tus maximos de fuerza</h2>
+        <p className="text-muted text-sm">Opcional — para personalizar las cargas</p>
+      </div>
+
+      <div className="space-y-4">
+        {fields.map((f) => (
+          <div key={f.key}>
+            <label className="text-sm text-muted mb-1 block">{f.label}</label>
+            <div className="relative">
+              <input
+                type="number"
+                placeholder="0"
+                value={values[f.key as keyof typeof values]}
+                onChange={(e) => onChange(f.key, e.target.value)}
+                min={0}
+                max={500}
+                autoComplete="off"
+                className="w-full px-4 py-3.5 rounded-xl text-base input-glass"
+              />
+              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-muted text-sm">kg</span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="space-y-3">
+        <button
+          onClick={onNext}
+          disabled={!hasAny}
+          className="w-full py-3.5 rounded-xl text-base font-semibold btn-gradient"
+        >
+          Siguiente
+        </button>
+        <button
+          onClick={onSkip}
+          className="w-full py-3 text-sm text-muted hover:text-white transition-colors"
+        >
+          Omitir
+        </button>
+      </div>
+    </div>
+  )
+}
+
+function StepRun5K({
+  value,
+  onChange,
+  onNext,
+  onSkip,
+  loading,
+}: {
+  value: string
+  onChange: (v: string) => void
+  onNext: () => void
+  onSkip: () => void
+  loading: boolean
+}) {
+  return (
+    <div className="space-y-8">
+      <div className="space-y-2">
+        <h2 className="text-2xl font-bold">Tu tiempo en 5K</h2>
+        <p className="text-muted text-sm">Opcional — para calibrar el cardio</p>
+      </div>
+
+      <div className="relative">
+        <input
+          type="number"
+          placeholder="25"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && value && onNext()}
+          min={10}
+          max={60}
+          autoComplete="off"
+          className="w-full px-4 py-3.5 rounded-xl text-base input-glass"
+        />
+        <span className="absolute right-4 top-1/2 -translate-y-1/2 text-muted text-sm">min</span>
+      </div>
+
+      <div className="space-y-3">
+        <button
+          onClick={onNext}
+          disabled={loading || !value}
+          className="w-full py-3.5 rounded-xl text-base font-semibold btn-gradient"
+        >
+          {loading ? 'Guardando...' : 'Siguiente'}
+        </button>
+        <button
+          onClick={onSkip}
+          disabled={loading}
+          className="w-full py-3 text-sm text-muted hover:text-white transition-colors"
+        >
+          Omitir
+        </button>
+      </div>
+    </div>
+  )
+}
+
 function StepAvatar({ onNext, onSkip }: { onNext: () => void; onSkip: () => void }) {
   const [preview, setPreview] = useState<string | null>(null)
   const [uploading, setUploading] = useState(false)
@@ -388,7 +656,7 @@ function StepAvatar({ onNext, onSkip }: { onNext: () => void; onSkip: () => void
       .from('avatars')
       .getPublicUrl(path)
 
-    const result = await saveAvatarUrl(publicUrl)
+    const result = await updateAvatar(publicUrl)
     if (result?.error) {
       setError(result.error)
       setPreview(null)
@@ -399,12 +667,12 @@ function StepAvatar({ onNext, onSkip }: { onNext: () => void; onSkip: () => void
   }
 
   async function handleNext() {
-    await markOnboardingComplete()
+    await completeOnboarding()
     onNext()
   }
 
   async function handleSkip() {
-    await markOnboardingComplete()
+    await completeOnboarding()
     onSkip()
   }
 
