@@ -680,5 +680,57 @@
         "step3": "Once in Safari, tap “Install app” again."
       }
     }
+  },
+  "ambassadors": {
+    "pageTitle": "Become an ATHLEX Training ambassador",
+    "pageDescription": "Join the ATHLEX Training ambassador program. Promote ATHX programming and become part of the team.",
+    "ogTitle": "ATHLEX Training ambassador program",
+    "ogDescription": "How the ambassador program works and how to apply.",
+    "eyebrow": "Ambassador program",
+    "title": "Train, share, grow with ATHLEX",
+    "intro": "We're looking for athletes who already live the ATHX programming and want to represent it. If you train seriously and have a community that listens to you, this is for you.",
+    "hero": {
+      "badge": "ATHX Ambassador",
+      "cta": "I want to apply",
+      "fineprint": "No commitment. Every application gets a real review."
+    },
+    "sections": {
+      "about": {
+        "title": "Who we are",
+        "body": "ATHLEX Training is the ATHX™ programming: weekly plans, load tracking, and direct chat with your coach. Ambassadors are part of our community, sharing their workouts with our clients and earning money for it."
+      },
+      "howItWorks": {
+        "title": "How it works",
+        "steps": [
+          "Send us your details and your socials.",
+          "We review your profile and get in touch with you.",
+          "We onboard you into the program, sharing your workouts.",
+          "You earn income from the people subscribed to your training."
+        ]
+      },
+      "criteria": {
+        "title": "What we look for",
+        "items": [
+          "Active, consistent training (any strength/fitness discipline).",
+          "Your own community on social media, any size.",
+          "Willingness to share your process honestly."
+        ]
+      }
+    },
+    "form": {
+      "title": "Apply now",
+      "nameLabel": "Name",
+      "namePlaceholder": "Your full name",
+      "emailLabel": "Email",
+      "emailPlaceholder": "you@email.com",
+      "socialLinkLabel": "Social profile (optional)",
+      "socialLinkPlaceholder": "https://instagram.com/your_handle",
+      "messageLabel": "Tell us about yourself",
+      "messagePlaceholder": "Your discipline, your community, why you want to be an ambassador...",
+      "submit": "Send application",
+      "submitSending": "Sending…",
+      "successTitle": "Application sent!",
+      "successBody": "Thanks for applying. We'll review your application and reach out by email."
+    }
   }
 }

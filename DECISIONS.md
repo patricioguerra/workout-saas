@@ -124,8 +124,11 @@ scoped to DEC-002.
 
 ### Tasks
 
-- [ ] Draft landing content sections (who we are, how the program works,
+- [x] Draft landing content sections (who we are, how the program works,
       criteria, application CTA)
-- [ ] Build `/ambassadors` page reusing existing layout/components and style
-- [ ] Wire application CTA (e.g. via existing `support` contact flow)
-- [ ] Update the dependency graph in AGENTS.md in the same commit
+- [x] Build `/embajadores` (es) / `/ambassadors` (en) page reusing existing
+      layout/components and style
+- [x] Wire application CTA via a dedicated `ambassadors` use case that emails
+      the admin directly (no auth, no DB) — not the `support` contact flow,
+      which requires a signed-in user
+- [x] Update the dependency graph in AGENTS.md in the same commit

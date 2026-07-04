@@ -680,5 +680,57 @@
         "step3": "Una vez en Safari, vuelve a tocar «Instalar app»."
       }
     }
+  },
+  "ambassadors": {
+    "pageTitle": "Sé embajador ATHLEX Training",
+    "pageDescription": "Únete al programa de embajadores de ATHLEX Training. Promueve la programación ATHX™ y forma parte del equipo.",
+    "ogTitle": "Programa de embajadores ATHLEX Training",
+    "ogDescription": "Cómo funciona el programa de embajadores y cómo aplicar.",
+    "eyebrow": "Programa de embajadores",
+    "title": "Entrena, comparte, crece con ATHLEX",
+    "intro": "Buscamos atletas que entrenen ATHX™ y quieran mostrar sus entrenos a cambio de ingresos. Si te dedicas a ello y tienes una comunidad que te escucha, esto es para ti.",
+    "hero": {
+      "badge": "Embajador ATHX™",
+      "cta": "Quiero aplicar",
+      "fineprint": "Sin compromiso. Revisamos cada solicitud a mano."
+    },
+    "sections": {
+      "about": {
+        "title": "Quiénes somos y que puedes aportar",
+        "body": "ATHLEX Training es la programación ATHX™: planes semanales, seguimiento de cargas y chat directo con coach. Los embajadores forman parte de nuestra comunidad, compartiendo sus entrenos con nuestros clientes y generando dinero por ello."
+      },
+      "howItWorks": {
+        "title": "Cómo funciona",
+        "steps": [
+          "Envía tus datos y tus redes.",
+          "Revisamos tu perfil y nos ponemos en contacto contigo.",
+          "Te incorporamos al programa compartiendo tus entrenos.",
+          "Recibes ingresos por las personas suscritas a tu entreno."
+        ]
+      },
+      "criteria": {
+        "title": "Qué buscamos",
+        "items": [
+          "Entrenamiento activo y constante (cualquier disciplina de fuerza/fitness).",
+          "Comunidad propia en redes sociales, del tamaño que sea.",
+          "Ganas de compartir tu proceso de forma honesta."
+        ]
+      }
+    },
+    "form": {
+      "title": "Aplica ahora",
+      "nameLabel": "Nombre",
+      "namePlaceholder": "Tu nombre completo",
+      "emailLabel": "Email",
+      "emailPlaceholder": "tu@email.com",
+      "socialLinkLabel": "Red social (opcional)",
+      "socialLinkPlaceholder": "https://instagram.com/tu_usuario",
+      "messageLabel": "Cuéntanos sobre ti",
+      "messagePlaceholder": "Tu disciplina, tu comunidad, por qué quieres ser embajador...",
+      "submit": "Enviar solicitud",
+      "submitSending": "Enviando…",
+      "successTitle": "¡Solicitud enviada!",
+      "successBody": "Gracias por aplicar. Revisaremos tu solicitud y te contactaremos por email."
+    }
   }
 }

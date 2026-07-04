@@ -151,6 +151,7 @@ app/
 ├─ auth/callback/route.ts        ─→ shared.supabase.server
 ├─ bienvenida/page.tsx           ─→ motion + components.{reveal, install-pwa}  (post-checkout cinematic tour, install CTA on final step)
 ├─ que-es-athx/page.tsx          ─→ shared.seo.jsonld
+├─ embajadores/page.tsx          ─→ ambassadors.{application.apply, ui.application-form}
 ├─ privacidad/page.tsx           ─→ (legal, no deps — required by Google OAuth consent)
 ├─ terminos/page.tsx             ─→ (legal, no deps — required by Google OAuth consent)
 ├─ layout.tsx (root)             UPDATED: ─→ shared.seo.{site, jsonld} + shared.analytics
@@ -207,28 +208,34 @@ src/modules/
 │     ├─ create-portal-session.ts   ─→ shared.supabase.server + billing.stripe-client
 │     └─ handle-webhook.ts          ─→ shared.supabase.admin + billing.{stripe-client, subscription-repository}
 │
-└─ support/
-   ├─ domain/
-   │  ├─ thread.ts               (SupportThread, SupportMessage, ThreadStatus, MessageAuthor)
-   │  └─ validators.ts           (validateSubject, validateBody)
-   ├─ infra/
-   │  ├─ thread-repository.ts    ─→ shared.supabase.{server, admin} (CRUD threads + messages)
-   │  └─ email-client.ts         ─→ resend (sendNewMessageToAdmin, sendReplyToUser, sendUserReplyToAdmin)
-   ├─ application/
-   │  ├─ require-admin.ts        ─→ identity.get-current-profile  (requireAdmin, isCurrentUserAdmin)
-   │  ├─ send-new-message.ts     ─→ identity.get-current-user + support.{thread-repo, email-client, validators}
-   │  ├─ reply-to-thread.ts      ─→ identity.{get-current-user, get-current-profile} + support.{thread-repo, email-client, validators}
-   │  ├─ list-user-threads.ts    ─→ identity.get-current-user + support.thread-repo
-   │  ├─ list-all-threads.ts     ─→ support.{require-admin.isCurrentUserAdmin, thread-repo}
-   │  ├─ get-thread.ts           ─→ identity.{get-current-user, get-current-profile} + support.thread-repo
-   │  ├─ mark-thread-read.ts     ─→ identity.{get-current-user, get-current-profile} + shared.supabase.server
-   │  ├─ get-unread-count.ts     ─→ identity.{get-current-user, get-current-profile} + shared.supabase.server
-   │  └─ toggle-thread-status.ts ─→ support.{require-admin, thread-repo}
-   └─ ui/
-      ├─ contact-form.tsx        ─→ support.{send-new-message, validators}
-      ├─ reply-form.tsx          ─→ support.{reply-to-thread, validators}
-      ├─ thread-list.tsx         (list rendering)
-      └─ message-bubble.tsx      ─→ support.domain.thread
+├─ support/
+│  ├─ domain/
+│  │  ├─ thread.ts               (SupportThread, SupportMessage, ThreadStatus, MessageAuthor)
+│  │  └─ validators.ts           (validateSubject, validateBody)
+│  ├─ infra/
+│  │  ├─ thread-repository.ts    ─→ shared.supabase.{server, admin} (CRUD threads + messages)
+│  │  └─ email-client.ts         ─→ resend (sendNewMessageToAdmin, sendReplyToUser, sendUserReplyToAdmin)
+│  ├─ application/
+│  │  ├─ require-admin.ts        ─→ identity.get-current-profile  (requireAdmin, isCurrentUserAdmin)
+│  │  ├─ send-new-message.ts     ─→ identity.get-current-user + support.{thread-repo, email-client, validators}
+│  │  ├─ reply-to-thread.ts      ─→ identity.{get-current-user, get-current-profile} + support.{thread-repo, email-client, validators}
+│  │  ├─ list-user-threads.ts    ─→ identity.get-current-user + support.thread-repo
+│  │  ├─ list-all-threads.ts     ─→ support.{require-admin.isCurrentUserAdmin, thread-repo}
+│  │  ├─ get-thread.ts           ─→ identity.{get-current-user, get-current-profile} + support.thread-repo
+│  │  ├─ mark-thread-read.ts     ─→ identity.{get-current-user, get-current-profile} + shared.supabase.server
+│  │  ├─ get-unread-count.ts     ─→ identity.{get-current-user, get-current-profile} + shared.supabase.server
+│  │  └─ toggle-thread-status.ts ─→ support.{require-admin, thread-repo}
+│  └─ ui/
+│     ├─ contact-form.tsx        ─→ support.{send-new-message, validators}
+│     ├─ reply-form.tsx          ─→ support.{reply-to-thread, validators}
+│     ├─ thread-list.tsx         (list rendering)
+│     └─ message-bubble.tsx      ─→ support.domain.thread
+│
+└─ ambassadors/
+   ├─ domain/validators.ts       (validateName, validateEmail, validateMessage — pure)
+   ├─ infra/email-client.ts      ─→ resend (sendApplicationToAdmin)
+   ├─ application/apply.ts       ─→ ambassadors.{domain.validators, infra.email-client}
+   └─ ui/application-form.tsx    ─→ ambassadors.application.apply
 
 src/shared/
 ├─ infra/supabase/{client,server,admin}.ts
