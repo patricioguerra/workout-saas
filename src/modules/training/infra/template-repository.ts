@@ -77,6 +77,23 @@ export async function getRawTemplate(
   return data.content as LocalizedWeekContent
 }
 
+/**
+ * Lists the week numbers that actually have a template row for this
+ * category, ascending. Drives the admin week picker instead of a
+ * hardcoded range, since weeks are uploaded incrementally and without
+ * an upper bound. Service-role client — gated by requireAdmin in the use case.
+ */
+export async function getWeekNumbersForCategory(category: Category): Promise<number[]> {
+  const supabase = createSupabaseAdmin()
+  const { data } = await supabase
+    .from('workout_templates')
+    .select('week_number')
+    .eq('category', category)
+    .order('week_number', { ascending: true })
+
+  return (data ?? []).map((row) => row.week_number as number)
+}
+
 /** Scalar blocks: always written as-is (never removed), since `titulo` is required. */
 const STRING_BLOCKS: BlockKey[] = ['titulo', 'recuperacion']
 
