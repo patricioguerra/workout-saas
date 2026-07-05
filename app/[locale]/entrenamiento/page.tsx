@@ -6,6 +6,7 @@ import { getCurrentProfile } from "@/modules/identity/application/get-current-pr
 import { isUserSubscribed } from "@/modules/billing/application/get-subscription-status";
 import { getWeekWorkout } from "@/modules/training/application/get-week-workout";
 import { getPreviewWorkout } from "@/modules/training/application/get-preview-workout";
+import { getAdminWeekNumbers } from "@/modules/training/application/get-admin-week-numbers";
 
 export const metadata: Metadata = {
   robots: {
@@ -168,9 +169,12 @@ export default async function EntrenamientoPage({
       : undefined;
   const effectiveCategory = adminCategoryOverride ?? profile?.category;
 
-  const [subscribed, workout] = await Promise.all([
+  const [subscribed, workout, adminWeekNumbers] = await Promise.all([
     isUserSubscribed(user.id),
     getWeekWorkout(locale as 'es' | 'en', adminWeekOverride, adminCategoryOverride),
+    isAdmin
+      ? getAdminWeekNumbers(effectiveCategory === "athx_pro" ? "athx_pro" : "athx")
+      : Promise.resolve([]),
   ]);
 
   if (!workout) {
@@ -234,6 +238,7 @@ export default async function EntrenamientoPage({
               <AdminWeekBadge
                 category={effectiveCategory === "athx_pro" ? "athx_pro" : "athx"}
                 weekNumber={weekNumber}
+                weekNumbers={adminWeekNumbers}
                 phaseLabel={t('week.phase')}
               />
             ) : (
