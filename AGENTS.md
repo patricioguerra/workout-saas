@@ -193,7 +193,7 @@ src/modules/
 │  ├─ get-preview-workout.ts     ─→ training.template-repository.getPublicTemplate (ATHX PRO wk1, no auth)
 │  ├─ application/get-admin-template.ts    ─→ support.require-admin + training.template-repository
 │  ├─ application/get-admin-week-numbers.ts ─→ support.require-admin + training.template-repository
-│  └─ application/update-template-block.ts ─→ support.require-admin + training.{workout-validators, template-repository}
+│  ├─ application/update-template-block.ts ─→ support.require-admin + training.{workout-validators, template-repository}
 │  └─ ui/
 │     ├─ timer-audio.ts          (Web Audio beeps + vibrate + wake-lock helpers)
 │     ├─ use-timer.ts            ─→ training.domain.timer + training.ui.timer-audio
