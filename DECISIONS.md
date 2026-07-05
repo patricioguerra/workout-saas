@@ -17,7 +17,7 @@ DEC supersedes the old one (bidirectional link).
 |---------|--------------------------------|---------|------------------|
 | DEC-001 | Adopt the DEC chain            | Done    | @patricioguerra  |
 | DEC-002 | Ambassadors feature (isolated) | Pending | Unassigned       |
-| DEC-003 | Ambassadors recruitment landing | In Progress | @patricioguerra |
+| DEC-003 | Ambassadors recruitment landing | Done    | @patricioguerra |
 
 ---
 
@@ -97,10 +97,11 @@ same deployment:
 
 ## DEC-003 — Ambassadors recruitment landing
 
-- Status: In Progress
+- Status: Done
 - Assignee: @patricioguerra
 - Created: 2026-06-20
 - Branch: dec-003-ambassadors-recruitment-landing
+- Merged: 3972a55 on 2026-07-05
 - Supersedes: —
 - Superseded by: —
 - Related: DEC-002
