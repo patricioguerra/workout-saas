@@ -168,13 +168,12 @@ export default async function EntrenamientoPage({
       ? resolvedParams.cat
       : undefined;
   const effectiveCategory = adminCategoryOverride ?? profile?.category;
+  const badgeCategory = effectiveCategory === "athx_pro" ? "athx_pro" : "athx";
 
   const [subscribed, workout, adminWeekNumbers] = await Promise.all([
     isUserSubscribed(user.id),
     getWeekWorkout(locale as 'es' | 'en', adminWeekOverride, adminCategoryOverride),
-    isAdmin
-      ? getAdminWeekNumbers(effectiveCategory === "athx_pro" ? "athx_pro" : "athx")
-      : Promise.resolve([]),
+    isAdmin ? getAdminWeekNumbers(badgeCategory) : Promise.resolve([]),
   ]);
 
   if (!workout) {
@@ -236,7 +235,7 @@ export default async function EntrenamientoPage({
           <div className="train-header-row">
             {isAdmin ? (
               <AdminWeekBadge
-                category={effectiveCategory === "athx_pro" ? "athx_pro" : "athx"}
+                category={badgeCategory}
                 weekNumber={weekNumber}
                 weekNumbers={adminWeekNumbers}
                 phaseLabel={t('week.phase')}
