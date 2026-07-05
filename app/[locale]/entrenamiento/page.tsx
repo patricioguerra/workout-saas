@@ -160,8 +160,8 @@ export default async function EntrenamientoPage({
   const resolvedParams = await searchParams;
   const profile = await getCurrentProfile();
   const isAdmin = profile?.is_admin ?? false;
-  const adminWeekOverride = isAdmin && resolvedParams?.week
-    ? parseInt(resolvedParams.week)
+  const adminWeekOverride = isAdmin
+    ? (resolvedParams?.week ? parseInt(resolvedParams.week) : 1)
     : undefined;
   const adminCategoryOverride =
     isAdmin && (resolvedParams?.cat === 'athx' || resolvedParams?.cat === 'athx_pro')
