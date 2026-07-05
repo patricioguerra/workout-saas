@@ -122,7 +122,8 @@ app/
 ├─ onboarding/page.tsx           ─→ onboarding.{save-basic-info, save-category, save-fitness-data, complete-onboarding}
 │                                  + identity.update-avatar + shared.supabase.client
 ├─ entrenamiento/page.tsx        ─→ identity.get-current-user + billing.get-subscription-status
-│                                  + training.{get-week-workout, get-preview-workout, cycle}
+│                                  + training.{get-week-workout, get-preview-workout, cycle,
+│                                    get-admin-week-numbers}
 ├─ entrenamiento/subscribe-button.tsx ─→ POST /api/stripe/checkout
 ├─ perfil/page.tsx               ─→ identity.{get-current-user, sign-out} + billing.get-active-subscription
 │                                  + components.install-pwa
@@ -144,7 +145,7 @@ app/
 │  ├─ page.tsx                   ─→ support.{require-admin, list-all-threads, ui.thread-list}
 │  └─ [id]/page.tsx              ─→ support.{require-admin, get-thread, ui.message-bubble, ui.reply-form}
 ├─ admin/entrenos/
-│  ├─ page.tsx                   ─→ support.require-admin
+│  ├─ page.tsx                   ─→ support.require-admin + training.get-admin-week-numbers
 │  ├─ [category]/[week]/page.tsx ─→ support.require-admin + training.get-admin-template
 │  │                                + identity.profile.isCategory + entrenos.block-editor
 │  └─ block-editor.tsx           ─→ training.{update-template-block, workout-validators}
@@ -191,6 +192,7 @@ src/modules/
 │  │    ─→ identity.{get-current-user, profile-repository} + training.{cycle, template-repository, workout}
 │  ├─ get-preview-workout.ts     ─→ training.template-repository.getPublicTemplate (ATHX PRO wk1, no auth)
 │  ├─ application/get-admin-template.ts    ─→ support.require-admin + training.template-repository
+│  ├─ application/get-admin-week-numbers.ts ─→ support.require-admin + training.template-repository
 │  ├─ application/update-template-block.ts ─→ support.require-admin + training.{workout-validators, template-repository}
 │  └─ ui/
 │     ├─ timer-audio.ts          (Web Audio beeps + vibrate + wake-lock helpers)

@@ -6,10 +6,11 @@ import { getCyclePhase } from '@/modules/training/domain/cycle'
 interface Props {
   category: 'athx' | 'athx_pro'
   weekNumber: number
+  weekNumbers: number[]
   phaseLabel: string
 }
 
-export function AdminWeekBadge({ category, weekNumber, phaseLabel }: Props) {
+export function AdminWeekBadge({ category, weekNumber, weekNumbers, phaseLabel }: Props) {
   const router = useRouter()
   const searchParams = useSearchParams()
   const phase = getCyclePhase(weekNumber)
@@ -47,9 +48,9 @@ export function AdminWeekBadge({ category, weekNumber, phaseLabel }: Props) {
           className="absolute inset-0 opacity-0 cursor-pointer w-full"
           aria-label="Seleccionar semana"
         >
-          {Array.from({ length: 6 }, (_, i) => (
-            <option key={i + 1} value={i + 1}>
-              {phaseLabel} {i + 1}
+          {weekNumbers.map((w) => (
+            <option key={w} value={w}>
+              {phaseLabel} {w}
             </option>
           ))}
         </select>

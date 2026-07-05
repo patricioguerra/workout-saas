@@ -21,7 +21,7 @@ export default async function Page({
 
   if (!isCategory(category)) notFound()
   const weekNumber = parseInt(week)
-  if (!(weekNumber >= 1 && weekNumber <= 6)) notFound()
+  if (!(weekNumber >= 1)) notFound()
 
   const content = await getAdminTemplate(category, weekNumber)
   if (!content) notFound()

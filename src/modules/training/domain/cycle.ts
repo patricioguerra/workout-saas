@@ -31,8 +31,8 @@ export function getUserCycleWeek(cycleStartDate: string | Date): UserCycleWeek {
   const safeWeeks = Math.max(0, weeksElapsed)
 
   return {
-    cycleNumber: Math.floor(safeWeeks / WEEKS_PER_CYCLE) + 1,
-    weekNumber: (safeWeeks % WEEKS_PER_CYCLE) + 1,
+    cycleNumber: 1,
+    weekNumber: safeWeeks + 1,
   }
 }
 
@@ -48,8 +48,9 @@ export interface CyclePhase {
 }
 
 export function getCyclePhase(weekNumber: number): CyclePhase {
-  if (weekNumber <= 2) return { code: 'BASE', label: 'Base' }
-  if (weekNumber <= 4) return { code: 'BUILD', label: 'Build' }
-  if (weekNumber === 5) return { code: 'PEAK', label: 'Peak' }
+  const w = ((weekNumber - 1) % WEEKS_PER_CYCLE) + 1
+  if (w <= 2) return { code: 'BASE', label: 'Base' }
+  if (w <= 4) return { code: 'BUILD', label: 'Build' }
+  if (w === 5) return { code: 'PEAK', label: 'Peak' }
   return { code: 'DELOAD', label: 'Deload' }
 }
