@@ -19,7 +19,7 @@ export async function getWeekWorkout(
 
   const { cycleNumber, weekNumber } = getUserCycleWeek(profile.cycle_start_date)
   const effectiveWeek =
-    weekNumberOverride && weekNumberOverride >= 1 && weekNumberOverride <= 6
+    weekNumberOverride && weekNumberOverride >= 1
       ? weekNumberOverride
       : weekNumber
 
