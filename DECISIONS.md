@@ -18,7 +18,7 @@ DEC supersedes the old one (bidirectional link).
 | DEC-001 | Adopt the DEC chain            | Done    | @patricioguerra  |
 | DEC-002 | Ambassadors feature (isolated) | Pending | Unassigned       |
 | DEC-003 | Ambassadors recruitment landing | Done    | @patricioguerra |
-| DEC-004 | Blog / noticias ATHX            | Pending | @patricioguerra |
+| DEC-004 | Blog / noticias ATHX            | Done    | @patricioguerra |
 
 ---
 
@@ -137,10 +137,11 @@ scoped to DEC-002.
 
 ## DEC-004 — Blog / noticias ATHX
 
-- Status: Pending
+- Status: Done
 - Assignee: @patricioguerra
 - Created: 2026-07-24
 - Branch: dec-004-blog-noticias-athx
+- Merged: 211cedc on 2026-07-24
 - Supersedes: —
 - Superseded by: —
 - Related: —
@@ -177,8 +178,8 @@ See `docs/superpowers/specs/2026-07-24-blog-design.md`.
 
 ### Tasks
 
-- [ ] Add `blog_posts` table migration (Supabase)
-- [ ] Scaffold `src/modules/blog/` bounded context (domain/infra/application)
-- [ ] Build `/noticias` + `/noticias/[slug]` pages, i18n strings, navbar link
-- [ ] Build `generate-blog-post` skill (search, dedupe, bilingual draft, upsert)
-- [ ] Update the dependency graph in AGENTS.md in the same commit
+- [x] Add `blog_posts` table migration (Supabase)
+- [x] Scaffold `src/modules/blog/` bounded context (domain/infra/application)
+- [x] Build `/noticias` + `/noticias/[slug]` pages, i18n strings, navbar link
+- [x] Build `generate-blog-post` skill (search, dedupe, bilingual draft, upsert)
+- [x] Update the dependency graph in AGENTS.md in the same commit
