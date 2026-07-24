@@ -64,3 +64,23 @@ export function faqPageLd(items: { question: string; answer: string }[], locale?
     inLanguage: locale ?? 'es',
   };
 }
+
+export function blogPostingLd(
+  post: { title: string; excerpt: string; url: string; imageUrl?: string | null; publishedAt: string },
+  locale?: 'es' | 'en'
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.excerpt,
+    url: post.url,
+    datePublished: post.publishedAt,
+    ...(post.imageUrl ? { image: post.imageUrl } : {}),
+    publisher: {
+      "@type": "Organization",
+      name: SITE_NAME,
+    },
+    inLanguage: locale ?? 'es',
+  };
+}
