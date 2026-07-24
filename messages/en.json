@@ -412,6 +412,7 @@
   "nav": {
     "brandAriaLabel": "ATHLEX training",
     "programLink": "Programming",
+    "newsLink": "News",
     "signInButton": "Sign in",
     "menu": {
       "ariaLabel": "Menu",
@@ -731,6 +732,21 @@
       "submitSending": "Sending…",
       "successTitle": "Application sent!",
       "successBody": "Thanks for applying. We'll review your application and reach out by email."
+    }
+  },
+  "noticias": {
+    "pageTitle": "ATHX News: ATHX Games 2026 updates",
+    "pageDescription": "Latest news, announcements, and updates about ATHX Games 2026 and the ATHLEX community.",
+    "eyebrow": "News",
+    "title": "News",
+    "empty": "No news posted yet. Check back soon.",
+    "readMore": "Read more",
+    "backToList": "Back to news",
+    "sourceLabel": "Source",
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next",
+      "pageLabel": "Page {page} of {totalPages}"
     }
   }
 }

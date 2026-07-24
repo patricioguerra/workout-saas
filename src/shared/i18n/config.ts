@@ -46,6 +46,14 @@ export const pathnames = {
     es: '/embajadores',
     en: '/ambassadors',
   },
+  '/noticias': {
+    es: '/noticias',
+    en: '/news',
+  },
+  '/noticias/[slug]': {
+    es: '/noticias/[slug]',
+    en: '/news/[slug]',
+  },
 } as const;
 
 export type AppPathname = keyof typeof pathnames;
