@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, getFormatter } from "next-intl/server";
 import { Link } from "@/shared/i18n/routing";
 import { SITE_URL } from "@/shared/seo/site";
 import { listPosts } from "@/modules/blog/application/list-posts";
+import { PAGE_SIZE } from "@/modules/blog/domain/pagination";
+import { Reveal } from "../reveal";
 
 export async function generateMetadata({
   params,
@@ -31,6 +33,14 @@ export async function generateMetadata({
   };
 }
 
+function sourceDomain(url: string): string {
+  try {
+    return new URL(url).hostname.replace(/^www\./, "");
+  } catch {
+    return url;
+  }
+}
+
 export default async function NoticiasPage({
   params,
   searchParams,
@@ -41,6 +51,7 @@ export default async function NoticiasPage({
   const { locale } = await params;
   const resolvedSearchParams = await searchParams;
   const t = await getTranslations({ locale, namespace: "noticias" });
+  const format = await getFormatter({ locale });
   const requestedPage = resolvedSearchParams?.page
     ? parseInt(resolvedSearchParams.page, 10)
     : 1;
@@ -48,56 +59,163 @@ export default async function NoticiasPage({
   const loc = locale === "en" ? "en" : "es";
 
   return (
-    <div className="mx-auto max-w-2xl px-6 py-16 space-y-10">
-      <header className="space-y-4">
-        <p className="text-sm uppercase tracking-widest text-accent">{t("eyebrow")}</p>
-        <h1 className="text-4xl font-bold leading-tight">{t("title")}</h1>
+    <div>
+      <header className="relative isolate px-6 pt-14 pb-10 overflow-hidden">
+        <div className="noticias-header-bg">
+          <div className="hero-grid" />
+        </div>
+        <div className="noticias-header-fade" />
+        <Reveal>
+          <div className="max-w-2xl mx-auto space-y-4">
+            <span className="hero-eyebrow">
+              <span className="hero-dot" />
+              {t("eyebrow")}
+            </span>
+            <h1 className="text-5xl font-bold leading-[0.95] tracking-tight text-balance">
+              {t("title")}
+            </h1>
+          </div>
+        </Reveal>
       </header>
 
-      {posts.length === 0 ? (
-        <p className="text-muted">{t("empty")}</p>
-      ) : (
-        <div className="space-y-6">
-          {posts.map((post) => (
-            <article key={post.id} className="glass rounded-xl p-5 space-y-2">
-              <h2 className="text-xl font-semibold">
-                <Link href={{ pathname: "/noticias/[slug]", params: { slug: post.slug } }}>
-                  {post.content[loc].title}
-                </Link>
-              </h2>
-              <p className="text-muted text-sm">{post.content[loc].excerpt}</p>
-              <Link
-                href={{ pathname: "/noticias/[slug]", params: { slug: post.slug } }}
-                className="text-sm text-accent"
-              >
-                {t("readMore")}
-              </Link>
-            </article>
-          ))}
-        </div>
-      )}
+      <div className="max-w-2xl mx-auto px-6 pb-20 space-y-10">
+        {posts.length === 0 ? (
+          <div className="noticias-empty glass rounded-2xl">
+            <span className="noticias-empty-dot" />
+            <p className="text-muted text-sm">{t("empty")}</p>
+          </div>
+        ) : (
+          <div className="noticias-feed space-y-8">
+            {posts.map((post, i) => {
+              const globalIndex = (page - 1) * PAGE_SIZE + i + 1;
+              const content = post.content[loc];
+              return (
+                <Reveal key={post.id} delay={Math.min(i, 4) * 0.05}>
+                  <article className="noticias-entry">
+                    <span className="noticias-entry-node" />
+                    <div className="noticias-meta">
+                      <span>N&deg;{String(globalIndex).padStart(2, "0")}</span>
+                      <span className="noticias-meta-sep">&middot;</span>
+                      <span>
+                        {format.dateTime(new Date(post.publishedAt), {
+                          day: "2-digit",
+                          month: "short",
+                          year: "numeric",
+                        })}
+                      </span>
+                      {post.sourceUrl && (
+                        <>
+                          <span className="noticias-meta-sep">&middot;</span>
+                          <span>{sourceDomain(post.sourceUrl)}</span>
+                        </>
+                      )}
+                    </div>
 
-      {totalPages > 1 && (
-        <nav className="flex items-center justify-between pt-6 border-t border-white/10">
-          <Link
-            href={{ pathname: "/noticias", query: { page: String(Math.max(1, page - 1)) } }}
-            aria-disabled={page <= 1}
-            className={`text-sm ${page <= 1 ? "pointer-events-none text-muted/40" : "text-accent"}`}
-          >
-            {t("pagination.previous")}
-          </Link>
-          <span className="text-sm text-muted">
-            {t("pagination.pageLabel", { page, totalPages })}
-          </span>
-          <Link
-            href={{ pathname: "/noticias", query: { page: String(Math.min(totalPages, page + 1)) } }}
-            aria-disabled={page >= totalPages}
-            className={`text-sm ${page >= totalPages ? "pointer-events-none text-muted/40" : "text-accent"}`}
-          >
-            {t("pagination.next")}
-          </Link>
-        </nav>
-      )}
+                    <h2 className="text-xl font-semibold mt-2 leading-snug">
+                      <Link
+                        href={{ pathname: "/noticias/[slug]", params: { slug: post.slug } }}
+                        className="noticias-title-link"
+                      >
+                        {content.title}
+                      </Link>
+                    </h2>
+
+                    <p className="text-muted text-sm mt-2 leading-relaxed">
+                      {content.excerpt}
+                    </p>
+
+                    <Link
+                      href={{ pathname: "/noticias/[slug]", params: { slug: post.slug } }}
+                      className="noticias-read-more mt-3"
+                    >
+                      {t("readMore")}
+                      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path
+                          d="M5 12h14M13 5l7 7-7 7"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </Link>
+                  </article>
+                </Reveal>
+              );
+            })}
+          </div>
+        )}
+
+        {totalPages > 1 && (
+          <nav className="flex items-center justify-between pt-6 border-t border-white/10">
+            {page <= 1 ? (
+              <span className="noticias-pager-btn is-disabled">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path
+                    d="M15 6l-6 6 6 6"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                {t("pagination.previous")}
+              </span>
+            ) : (
+              <Link
+                href={{ pathname: "/noticias", query: { page: String(page - 1) } }}
+                className="noticias-pager-btn"
+              >
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path
+                    d="M15 6l-6 6 6 6"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                {t("pagination.previous")}
+              </Link>
+            )}
+
+            <span className="noticias-pager-index">
+              {t("pagination.pageLabel", { page, totalPages })}
+            </span>
+
+            {page >= totalPages ? (
+              <span className="noticias-pager-btn is-disabled">
+                {t("pagination.next")}
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path
+                    d="M9 6l6 6-6 6"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </span>
+            ) : (
+              <Link
+                href={{ pathname: "/noticias", query: { page: String(page + 1) } }}
+                className="noticias-pager-btn"
+              >
+                {t("pagination.next")}
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path
+                    d="M9 6l6 6-6 6"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </Link>
+            )}
+          </nav>
+        )}
+      </div>
     </div>
   );
 }

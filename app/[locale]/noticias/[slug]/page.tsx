@@ -5,6 +5,7 @@ import { Link } from "@/shared/i18n/routing";
 import { JsonLd, blogPostingLd } from "@/shared/seo/jsonld";
 import { SITE_URL } from "@/shared/seo/site";
 import { getPost } from "@/modules/blog/application/get-post";
+import { Reveal } from "../../reveal";
 
 export async function generateMetadata({
   params,
@@ -45,6 +46,14 @@ export async function generateMetadata({
   };
 }
 
+function sourceDomain(url: string): string {
+  try {
+    return new URL(url).hostname.replace(/^www\./, "");
+  } catch {
+    return url;
+  }
+}
+
 export default async function NoticiaDetailPage({
   params,
 }: {
@@ -75,38 +84,79 @@ export default async function NoticiaDetailPage({
         )}
       />
 
-      <Link href="/noticias" className="text-sm text-accent">
+      <Link href="/noticias" className="noticias-read-more">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path
+            d="M19 12H5M11 5l-7 7 7 7"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
         {t("backToList")}
       </Link>
 
-      <header className="space-y-3">
-        <h1 className="text-4xl font-bold leading-tight">{content.title}</h1>
-        <p className="text-sm text-muted">
-          {format.dateTime(new Date(post.publishedAt), {
-            day: "2-digit",
-            month: "long",
-            year: "numeric",
-          })}
-        </p>
-      </header>
+      <Reveal>
+        <header className="space-y-4">
+          <div className="noticias-meta">
+            <span>
+              {format.dateTime(new Date(post.publishedAt), {
+                day: "2-digit",
+                month: "short",
+                year: "numeric",
+              })}
+            </span>
+            {post.sourceUrl && (
+              <>
+                <span className="noticias-meta-sep">&middot;</span>
+                <span>{sourceDomain(post.sourceUrl)}</span>
+              </>
+            )}
+          </div>
+          <h1 className="text-4xl font-bold leading-[1.05] tracking-tight text-balance">
+            {content.title}
+          </h1>
+        </header>
+      </Reveal>
 
       {post.coverImageUrl && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={post.coverImageUrl} alt={content.title} className="w-full rounded-xl" />
+        <Reveal delay={0.05}>
+          <div className="noticias-cover">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={post.coverImageUrl} alt={content.title} />
+          </div>
+        </Reveal>
       )}
 
-      <div
-        className="space-y-4 leading-relaxed [&_a]:text-accent [&_a]:underline [&_strong]:font-semibold"
-        dangerouslySetInnerHTML={{ __html: content.body }}
-      />
+      <Reveal delay={0.1}>
+        <div
+          className="noticias-body"
+          dangerouslySetInnerHTML={{ __html: content.body }}
+        />
+      </Reveal>
 
       {post.sourceUrl && (
-        <p className="text-sm text-muted border-t border-white/10 pt-6">
-          {t("sourceLabel")}:{" "}
-          <a href={post.sourceUrl} target="_blank" rel="noopener noreferrer" className="text-accent">
-            {post.sourceUrl}
+        <div className="pt-6 border-t border-white/10">
+          <a
+            href={post.sourceUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="noticias-source-chip glass"
+          >
+            <span className="noticias-source-label">{t("sourceLabel")}</span>
+            <span className="noticias-source-domain">{sourceDomain(post.sourceUrl)}</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M7 17L17 7M17 7H9M17 7V15"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
           </a>
-        </p>
+        </div>
       )}
     </article>
   );
