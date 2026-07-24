@@ -38,6 +38,12 @@ export async function Navbar() {
         >
           {t("programLink")}
         </Link>
+        <Link
+          href="/noticias"
+          className="text-sm text-muted hover:text-white transition-colors"
+        >
+          {t("newsLink")}
+        </Link>
       </div>
 
       <div className="flex items-center gap-4">
