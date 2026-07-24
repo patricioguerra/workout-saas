@@ -125,10 +125,13 @@ app/
 │                                  + training.{get-week-workout, get-preview-workout, cycle,
 │                                    get-admin-week-numbers}
 ├─ entrenamiento/subscribe-button.tsx ─→ POST /api/stripe/checkout
+├─ noticias/
+│  ├─ page.tsx                   ─→ blog.application.list-posts
+│  └─ [slug]/page.tsx            ─→ blog.application.get-post
 ├─ perfil/page.tsx               ─→ identity.{get-current-user, sign-out} + billing.get-active-subscription
 │                                  + components.install-pwa
 ├─ perfil/portal-button.tsx      ─→ POST /api/stripe/portal
-├─ navbar.tsx                    ─→ shared.supabase.server + components.{nav-menu, admin-bell}
+├─ navbar.tsx                    UPDATED: ─→ shared.supabase.server + components.{nav-menu, admin-bell} (+ link to /noticias)
 ├─ components/nav-menu.tsx       ─→ vaul + identity.sign-out
 ├─ components/admin-bell.tsx     ─→ vaul + components.chat-panel + /api/support/poll
 ├─ components/chat-bubble-server.tsx ─→ shared.supabase.server + components.chat-bubble
@@ -233,23 +236,32 @@ src/modules/
 │     ├─ thread-list.tsx         (list rendering)
 │     └─ message-bubble.tsx      ─→ support.domain.thread
 │
-└─ ambassadors/
-   ├─ domain/validators.ts       (validateName, validateEmail, validateMessage — pure)
-   ├─ infra/email-client.ts      ─→ resend (sendApplicationToAdmin)
-   ├─ application/apply.ts       ─→ ambassadors.{domain.validators, infra.email-client}
-   └─ ui/application-form.tsx    ─→ ambassadors.application.apply
+├─ ambassadors/
+│  ├─ domain/validators.ts       (validateName, validateEmail, validateMessage — pure)
+│  ├─ infra/email-client.ts      ─→ resend (sendApplicationToAdmin)
+│  ├─ application/apply.ts       ─→ ambassadors.{domain.validators, infra.email-client}
+│  └─ ui/application-form.tsx    ─→ ambassadors.application.apply
+│
+└─ blog/
+   ├─ domain/
+   │  ├─ post.ts                 (PostContent, BlogPost)
+   │  └─ pagination.ts           (PAGE_SIZE, toSafePage, toOffset, toTotalPages — pure)
+   ├─ infra/post-repository.ts   ─→ shared.supabase.server (getPublishedPosts, getPostBySlug)
+   └─ application/
+      ├─ list-posts.ts           ─→ blog.{infra.post-repository, domain.pagination}
+      └─ get-post.ts             ─→ blog.infra.post-repository
 
 src/shared/
 ├─ infra/supabase/{client,server,admin}.ts
 ├─ seo/
 │  ├─ site.ts                    (SITE_URL, SITE_NAME, DEFAULT_DESCRIPTION, DEFAULT_KEYWORDS, locales)
-│  └─ jsonld.tsx                 (JsonLd component + organization/webSite/softwareApplication/faqPage builders)
+│  └─ jsonld.tsx                 UPDATED: (JsonLd component + organization/webSite/softwareApplication/faqPage/blogPosting builders)
 ├─ analytics/
 │  └─ analytics.tsx              ─→ @vercel/analytics + GA4 via next/script (client component, mounts via root layout)
 └─ utils/dates.ts                (getMondayOf, formatLocalDate, getWeekStartDate)
 ```
 
-DB tables: `profiles` (incl. `is_admin`), `subscriptions`, `workout_templates` (unique on category+week_number, 12 rows = 6 weeks × 2 categories), `support_threads` (incl. `last_read_by_user`, `last_read_by_admin`), `support_messages`.
+DB tables: `profiles` (incl. `is_admin`), `subscriptions`, `workout_templates` (unique on category+week_number, 12 rows = 6 weeks × 2 categories), `support_threads` (incl. `last_read_by_user`, `last_read_by_admin`), `support_messages`, `blog_posts` (unique on `slug`, `status` published/draft, RLS public-read on published only).
 
 When adding new code:
 1. Pick the bounded context. New context only if truly new domain.
