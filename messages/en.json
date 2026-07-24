@@ -10,12 +10,12 @@
   },
   "queEsAthx": {
     "pageTitle": "What is ATHX: athlete guide for 2026",
-    "pageDescription": "ATHX is ATHLEX's fitness competition. Learn what ATHX is, the 3 events (Strength, Endurance, MetCon X), ATHX and ATHX PRO categories, and how to prepare for ATHX 2026 with official programming.",
+    "pageDescription": "ATHX is the functional fitness competition ATHLEX Training trains for. Learn what ATHX is, the 3 events (Strength, Endurance, MetCon X), ATHX and ATHX PRO categories, and how to prepare for ATHX 2026 with official programming.",
     "ogTitle": "What is ATHX: athlete guide for 2026",
     "ogDescription": "What ATHX is, competition format, categories, and how to prepare.",
     "eyebrow": "ATHX Guide",
     "title": "What is ATHX and how to prepare for ATHX 2026",
-    "intro": "ATHX is ATHLEX's fitness competition. This guide explains the format, categories (ATHX and ATHX PRO), and how to build an <strong>ATHX programming plan</strong> that gets you to the podium.",
+    "intro": "ATHX is the functional fitness competition we train our athletes for. This guide explains the format, categories (ATHX and ATHX PRO), and how to build an <strong>ATHX programming plan</strong> that gets you to the podium.",
     "sections": {
       "format": {
         "title": "The ATHX format",
@@ -32,7 +32,7 @@
       "items": {
         "q1": {
           "question": "What is ATHX?",
-          "answer": "ATHX is the fitness competition organized by ATHLEX. It brings together strength tests, endurance events, and mixed competitions (MetCon X) in a 3-day format. It's open to athletes from Spain and Latin America."
+          "answer": "ATHX is an international functional fitness competition, held across different cities. It brings together strength tests, endurance events, and mixed competitions (MetCon X). ATHLEX Training doesn't organize the competition: we train athletes who want to compete in it with specific programming."
         },
         "q2": {
           "question": "What are the ATHX events?",
@@ -48,7 +48,7 @@
         },
         "q5": {
           "question": "When is ATHX 2026?",
-          "answer": "Official ATHX 2026 dates are announced on ATHLEX's official channel. Our programming is aligned to the competition calendar."
+          "answer": "Official ATHX 2026 dates are announced on the competition's official channels. Our programming is aligned to the competition calendar."
         }
       }
     },

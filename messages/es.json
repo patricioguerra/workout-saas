@@ -8,53 +8,53 @@
     "english": "English",
     "switchTo": "Cambiar a {lang}"
   },
-  "queEsAthx": {
-    "pageTitle": "Qué es ATHX: guía del atleta para 2026",
-    "pageDescription": "ATHX es la competición fitness de ATHLEX. Aprende qué es ATHX, los 3 eventos (Strength, Endurance, MetCon X), categorías ATHX y ATHX PRO, y cómo preparar ATHX 2026 con programación oficial.",
-    "ogTitle": "Qué es ATHX: guía del atleta para 2026",
-    "ogDescription": "Qué es ATHX, formato de la competición, categorías, y cómo prepararte.",
-    "eyebrow": "Guía ATHX",
-    "title": "Qué es ATHX y cómo preparar ATHX 2026",
-    "intro": "ATHX es la competición fitness de ATHLEX. Esta guía explica el formato, las categorías (ATHX y ATHX PRO) y cómo construir una <strong>programación ATHX</strong> que te lleve al podio.",
+  "queEsATHX": {
+    "pageTitle": "Qué es ATHX™: guía del atleta para 2026",
+    "pageDescription": "ATHX™ es la competición de fitness funcional para la que entrena ATHLEX Training. Aprende qué es ATHX™, los 3 eventos (Strength, Endurance, MetCon X), categorías ATHX™ y ATHX™ PRO, y cómo preparar ATHX™ 2026 con programación oficial.",
+    "ogTitle": "Qué es ATHX™: guía del atleta para 2026",
+    "ogDescription": "Qué es ATHX™, formato de la competición, categorías, y cómo prepararte.",
+    "eyebrow": "Guía ATHX™",
+    "title": "Qué es ATHX™ y cómo preparar ATHX™ 2026",
+    "intro": "ATHX™ es la competición de fitness funcional para la que preparamos a nuestros atletas. Esta guía explica el formato, las categorías (ATHX™ y ATHX™ PRO) y cómo construir una <strong>programación ATHX™</strong> que te lleve al podio.",
     "sections": {
       "format": {
-        "title": "El formato ATHX",
-        "body": "ATHX combina tres bloques: <strong>Strength</strong>, <strong>Endurance</strong> y <strong>MetCon X</strong>. Cada bloque mide una capacidad distinta y se puntúa de forma independiente. Gana quien rinda más parejo en los tres."
+        "title": "El formato ATHX™",
+        "body": "ATHX™ combina tres bloques: <strong>Strength</strong>, <strong>Endurance</strong> y <strong>MetCon X</strong>. Cada bloque mide una capacidad distinta y se puntúa de forma independiente. Gana quien rinda más parejo en los tres."
       },
       "programming": {
-        "title": "Cómo es una programación ATHX seria",
-        "body1": "Una <strong>programación ATHX</strong> bien hecha periodiza en 4 fases: BASE, BUILD, PEAK y DELOAD. La carga sube progresivamente por RPE y % de 1RM, con semanas de descarga para llegar fresco al evento.",
-        "body2": "El <strong>entrenamiento ATHX</strong> debe incluir los movimientos del año desde la semana 1 — si llegas a la competición con técnica dudosa, no compensarás con volumen."
+        "title": "Cómo es una programación ATHX™ seria",
+        "body1": "Una <strong>programación ATHX™</strong> bien hecha periodiza en 4 fases: BASE, BUILD, PEAK y DELOAD. La carga sube progresivamente por RPE y % de 1RM, con semanas de descarga para llegar fresco al evento.",
+        "body2": "El <strong>entrenamiento ATHX™</strong> debe incluir los movimientos del año desde la semana 1 — si llegas a la competición con técnica dudosa, no compensarás con volumen."
       }
     },
     "faq": {
-      "title": "Preguntas frecuentes sobre ATHX",
+      "title": "Preguntas frecuentes sobre ATHX™",
       "items": {
         "q1": {
-          "question": "¿Qué es ATHX?",
-          "answer": "ATHX es la competición fitness organizada por ATHLEX. Reúne pruebas de fuerza, resistencia y eventos mixtos (MetCon X) en un formato de 3 días. Está abierta a atletas de España y Latinoamérica."
+          "question": "¿Qué es ATHX™?",
+          "answer": "ATHX™ es una competición internacional de fitness funcional, con sedes en distintas ciudades. Reúne pruebas de fuerza, resistencia y eventos mixtos (MetCon X). ATHLEX Training no organiza la competición: preparamos a los atletas que quieren competir en ella con programación específica."
         },
         "q2": {
-          "question": "¿Cuáles son los eventos de ATHX?",
-          "answer": "ATHX se divide en tres bloques: Strength (fuerza máxima), Endurance (resistencia) y MetCon X (eventos mixtos con movimientos ponderados y gimnásticos). El ciclo culmina con una simulación de los 3 bloques."
+          "question": "¿Cuáles son los eventos de ATHX™?",
+          "answer": "ATHX™ se divide en tres bloques: Strength (fuerza máxima), Endurance (resistencia) y MetCon X (eventos mixtos con movimientos ponderados y gimnásticos). El ciclo culmina con una simulación de los 3 bloques."
         },
         "q3": {
-          "question": "¿Diferencia entre ATHX y ATHX PRO?",
-          "answer": "ATHX es la categoría abierta. ATHX PRO aumenta volumen e intensidad para atletas competitivos: sesiones más largas, cargas mayores y estándares de movimiento más estrictos."
+          "question": "¿Diferencia entre ATHX™ y ATHX™ PRO?",
+          "answer": "ATHX™ es la categoría abierta. ATHX™ PRO aumenta volumen e intensidad para atletas competitivos: sesiones más largas, cargas mayores y estándares de movimiento más estrictos."
         },
         "q4": {
-          "question": "¿Cómo me preparo para ATHX?",
-          "answer": "Con una programación ATHX específica: periodización en BASE, BUILD, PEAK y DELOAD, con calibración por RPE y % de 1RM. ATHLEX Training entrega un plan semanal de lunes a domingo, warmup, fuerza y MetCon por día, y chat con coach."
+          "question": "¿Cómo me preparo para ATHX™?",
+          "answer": "Con una programación ATHX™ específica: periodización en BASE, BUILD, PEAK y DELOAD, con calibración por RPE y % de 1RM. ATHLEX Training entrega un plan semanal de lunes a domingo, warmup, fuerza y MetCon por día, y chat con coach."
         },
         "q5": {
-          "question": "¿Cuándo es ATHX 2026?",
-          "answer": "Las fechas oficiales de ATHX 2026 se anuncian en el canal oficial de ATHLEX. Nuestra programación está alineada al calendario del evento."
+          "question": "¿Cuándo es ATHX™ 2026?",
+          "answer": "Las fechas oficiales de ATHX™ 2026 se anuncian en los canales oficiales de la competición. Nuestra programación está alineada al calendario del evento."
         }
       }
     },
     "cta": {
       "title": "Empieza hoy",
-      "body": "ATHLEX Training entrega programación ATHX oficial con plan semanal, seguimiento y chat directo con coach. Primera semana gratis.",
+      "body": "ATHLEX Training entrega programación ATHX™ oficial con plan semanal, seguimiento y chat directo con coach. Primera semana gratis.",
       "button": "Comienza ahora"
     }
   },
@@ -309,7 +309,7 @@
       "anonTitle": "Entrena con seguimiento completo",
       "anonDesc": "Habla directo con el equipo ATHLEX, recibe feedback de tus sesiones y accede al programa completo.",
       "anonBullet1": "Chat directo con el coach",
-      "anonBullet2": "Workouts adaptados ATHX / ATHX PRO",
+      "anonBullet2": "Workouts adaptados ATHX™ / ATHX™ PRO",
       "anonBullet3": "Seguimiento de 1RM y progresos",
       "anonCta": "Empieza ya",
       "anonFineprint": "Primera semana gratis.",
@@ -338,7 +338,7 @@
       "welcome": {
         "title": "BIENVENIDO",
         "titleAccent": "A ATHLEX.",
-        "subtitle": "Tu programa para ATHX te espera.",
+        "subtitle": "Tu programa para ATHX™ te espera.",
         "button": "EMPEZAR"
       },
       "basicInfo": {
@@ -362,12 +362,12 @@
       "category": {
         "label": "Tu categoría",
         "subtitle": "¿En qué categoría vas a competir?",
-        "athx": {
-          "label": "ATHX",
+        "ATHX™": {
+          "label": "ATHX™",
           "desc": "Categoría estándar"
         },
-        "athxPro": {
-          "label": "ATHX PRO",
+        "ATHX™Pro": {
+          "label": "ATHX™ PRO",
           "desc": "Avanzada — pesos mayores y dual dumbbell"
         }
       },
@@ -389,7 +389,7 @@
         "subtitle": "Accede a todos los entrenamientos semanales",
         "feature1": "Plan semanal completo (lunes a domingo)",
         "feature2": "Ciclos estructurados: BASE, BUILD, PEAK, DELOAD",
-        "feature3": "Metodología ATHX 2026",
+        "feature3": "Metodología ATHX™ 2026",
         "feature4": "Cancela cuando quieras",
         "subscribe": "Suscribirse",
         "skipLink": "Continuar sin suscripción"
@@ -519,12 +519,12 @@
   },
   "home": {
     "hero": {
-      "srOnlyDesc": "ATHLEX Training — entrenamiento ATHX y programación ATHX para atletas preparando ATHX 2026 en España y Latinoamérica.",
-      "eyebrow": "ATHX™ Training by ATHLEX",
+      "srOnlyDesc": "ATHLEX Training — entrenamiento ATHX™ y programación ATHX™ para atletas preparando ATHX™ 2026 en España y Latinoamérica.",
+      "eyebrow": "ATHX™™ Training by ATHLEX",
       "title": "ENTRENA\nMEJORA",
       "titleAccent": "COMPITE.",
-      "h1title": "Programación ATHX",
-      "subtitle": "™: plan semanal de entrenamiento para preparar ATHX 2026. Seguimiento y chat directo con tu entrenador.",
+      "h1title": "Programación ATHX™",
+      "subtitle": "™: plan semanal de entrenamiento para preparar ATHX™ 2026. Seguimiento y chat directo con tu entrenador.",
       "ctaPrimary": "COMIENZA AHORA",
       "fineprint": "Primera semana gratis",
       "scrollCue": "Programa"
@@ -556,11 +556,11 @@
     },
     "features": {
       "intro": "El programa",
-      "title": "Programación ATHX:\ntres pilares, cero relleno.",
+      "title": "Programación ATHX™:\ntres pilares, cero relleno.",
       "items": [
         {
-          "tag": "ATHX Specific",
-          "title": "Pensado para ATHX Games",
+          "tag": "ATHX™ Specific",
+          "title": "Pensado para ATHX™ Games",
           "body": "Cada semana y ciclo están pensados para los 3 eventos: Strength, Endurance y MetCon X. Sin relleno."
         },
         {
@@ -579,14 +579,14 @@
       "eyebrow": "Precio simple",
       "headline": "Un programa.\nUn precio.",
       "badge": "Popular",
-      "tag": "Programa ATHX 2026",
+      "tag": "Programa ATHX™ 2026",
       "price": "9",
       "priceDecimal": ",80",
       "unit": "/mes",
       "sub": "Cancela cuando quieras.",
       "features": [
         "Programación y seguimiento individual",
-        "2 categorías: ATHX y ATHX PRO",
+        "2 categorías: ATHX™ y ATHX™ PRO",
         "Plan semanal de lunes a domingo",
         "Warmup, fuerza y Metcon por día",
         "Primera semana gratis"
@@ -595,9 +595,9 @@
       "fineprint": "Sin permanencia"
     },
     "whyChoose": {
-      "title": "Por qué elegir ATHLEX para tu entrenamiento ATHX",
+      "title": "Por qué elegir ATHLEX para tu entrenamiento ATHX™",
       "intro": "¿Nuevo en la competición?",
-      "introLink": "Empieza por qué es ATHX",
+      "introLink": "Empieza por qué es ATHX™",
       "items": [
         "Estructura clara y adaptada a ti",
         "Progresión real: las cargas suben, los tiempos bajan.",
@@ -622,7 +622,7 @@
           "answer": "Entre 60 y 90 minutos."
         },
         "q4": {
-          "question": "¿Diferencia ATHX vs ATHX PRO?",
+          "question": "¿Diferencia ATHX™ vs ATHX™ PRO?",
           "answer": "PRO tiene una carga de trabajo mayor y los entrenamientos suelen durar un poco más."
         },
         "q5": {
