@@ -6,6 +6,7 @@ import { LanguageSwitcher } from "@/shared/i18n/components/language-switcher";
 import { NavMenu } from "./components/nav-menu";
 import { AdminBell } from "./components/admin-bell";
 import { BrandMark } from "./components/brand-mark";
+import { BrandMarkCompact } from "./components/brand-mark-compact";
 
 export async function Navbar() {
   const t = await getTranslations("nav");
@@ -29,8 +30,9 @@ export async function Navbar() {
   return (
     <nav className="px-4 py-3 flex items-center justify-between border-b border-white/10">
       <div className="flex items-center gap-6">
-        <Link href="/" className="text-white" aria-label={t("brandAriaLabel")}>
-          <BrandMark className="h-8 w-auto" />
+        <Link href="/" className="text-white shrink-0" aria-label={t("brandAriaLabel")}>
+          <BrandMark className="hidden sm:block h-8 w-auto" />
+          <BrandMarkCompact className="sm:hidden" />
         </Link>
         <Link
           href="/entrenamiento"
