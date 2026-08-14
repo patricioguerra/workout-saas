@@ -154,10 +154,10 @@ In `messages/en.json`, inside the `entrenamiento` object, add the matching block
 ```json
     "preview": {
       "lockedTitle": "Unlock this session",
-      "lockedSubtitle": "Monday is free. Sign up to see all 6 weeks and track your progress.",
+      "lockedSubtitle": "Monday is free. Sign up to see all weeks and track your progress.",
       "lockedButton": "Sign up free",
       "bannerTitle": "First week free",
-      "bannerSubtitle": "Create your account to unlock the full 6-week plan tailored to your category.",
+      "bannerSubtitle": "Create your account to unlock the full plan tailored to your category.",
       "bannerButton": "Get started"
     },
 ```

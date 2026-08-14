@@ -230,10 +230,10 @@
     },
     "preview": {
       "lockedTitle": "Desbloquea esta sesión",
-      "lockedSubtitle": "El lunes es gratis. Regístrate para ver las 6 semanas completas y seguir tu progreso.",
+      "lockedSubtitle": "El lunes es gratis. Regístrate para ver las semanas completas y seguir tu progreso.",
       "lockedButton": "Regístrate gratis",
       "bannerTitle": "Primera semana gratis",
-      "bannerSubtitle": "Crea tu cuenta para desbloquear el plan completo de 6 semanas adaptado a tu categoría.",
+      "bannerSubtitle": "Crea tu cuenta para desbloquear el plan completo adaptado a tu categoría.",
       "bannerButton": "Empieza ahora"
     },
     "paywall": {
