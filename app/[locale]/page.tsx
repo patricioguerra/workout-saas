@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/shared/i18n/routing";
 import { Reveal } from "./reveal";
+import { Countdown } from "./countdown";
 import { JsonLd, softwareApplicationLd, faqPageLd } from "@/shared/seo/jsonld";
 import { SITE_URL } from "@/shared/seo/site";
+import styles from "./season.module.css";
 
 export async function generateMetadata({
   params,
@@ -25,6 +27,30 @@ export async function generateMetadata({
   };
 }
 
+const ArrowIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path
+      d="M5 12h14M13 5l7 7-7 7"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+const ExternalIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path
+      d="M7 17 17 7M17 7H9M17 7v8"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
 export default async function Home({
   params,
 }: {
@@ -32,15 +58,22 @@ export default async function Home({
 }) {
   const { locale } = await params;
   const t = await getTranslations("home");
-  // Build FAQ items from translations
+  const t2 = await getTranslations("season2027");
+
   const faqKeys = ["q1", "q2", "q3", "q4", "q5"] as const;
   const faqItems = faqKeys.map((k) => ({
     question: t(`faq.items.${k}.question`),
     answer: t(`faq.items.${k}.answer`),
   }));
+  const features = t.raw("features.items") as Array<{
+    tag: string;
+    title: string;
+    body: string;
+  }>;
+  const whyItems = t.raw("whyChoose.items") as string[];
 
   return (
-    <div className="flex flex-col">
+    <div className={styles.page}>
       <link
         rel="preload"
         as="image"
@@ -49,74 +82,45 @@ export default async function Home({
       />
       <JsonLd data={softwareApplicationLd(locale as "es" | "en")} />
       <JsonLd data={faqPageLd(faqItems, locale as "es" | "en")} />
-      {/* Hero */}
-      <section className="hero-shell">
-        <p className="sr-only">{t("hero.srOnlyDesc")}</p>
-        <div className="hero-bg" aria-hidden="true">
-          <div className="hero-image" />
-          <div className="hero-vignette" />
-          <div className="hero-grid" />
-          <div className="hero-grain" />
-          <div className="hero-fade" />
-        </div>
 
-        <div className="hero-content">
-          <span className="hero-eyebrow">
-            <span className="hero-dot" />
-            {t("hero.eyebrow")}
-          </span>
-
-          <div className="hero-title">
-            {t("hero.title")
-              .split("\n")
-              .map((line, i) => (
-                <span key={i}>
-                  {line}
-                  {i < 2 && <br />}
-                </span>
-              ))}
-            <span className="hero-title-accent font-extrabold">
-              {t("hero.titleAccent")}
+      {/* Hero — ATHX 2027 */}
+      <section className={styles.hero}>
+        <div className={styles.heroGrid}>
+          <div className={styles.heroContent}>
+            <span className={styles.eyebrow}>
+              <span className={styles.dot} />
+              {t2("hero.eyebrow")}
             </span>
-          </div>
 
-          <div className="hero-sub">
-            <h1 className="inline m-0 p-0 [font:inherit]">
-              <strong>{t("hero.h1title")}</strong>
+            <h1 className={styles.headline}>
+              {t2("hero.titleLine1")}
+              <br />
+              <span className={styles.headlineAccent}>{t2("hero.titleLine2")}</span>
             </h1>
-            {t("hero.subtitle")}
+
+            <p className={styles.subtitle}>{t2("hero.subtitle")}</p>
+
+            <Link href="/login" className={styles.heroCta}>
+              {t2("hero.cta")}
+              <ArrowIcon />
+            </Link>
           </div>
 
-          <Link href="/login" className="hero-cta-primary">
-            {t("hero.ctaPrimary")}
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              aria-hidden="true"
-            >
-              <path
-                d="M5 12h14M13 5l7 7-7 7"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </Link>
-          <p className="hero-cta-fineprint">{t("hero.fineprint")}</p>
+          <div className={styles.heroVisual} aria-hidden="true">
+            <div className={styles.heroVisualOverlay} />
+            <div className={styles.heroGrainGrid} />
+          </div>
         </div>
 
-        <a href="#programa" className="hero-scroll-cue">
-          <span>{t("hero.scrollCue")}</span>
-          <span className="hero-scroll-arrow" aria-hidden="true">
+        <a href="#programa" className={styles.heroScrollCue}>
+          <span>{t2("hero.scrollCue")}</span>
+          <span className={styles.heroScrollArrow} aria-hidden="true">
             ↓
           </span>
         </a>
       </section>
 
-      {/* Tools — phone mockups */}
+      {/* Tools — phone mockups (unchanged) */}
       <section className="tools-shell">
         <Reveal className="tools-intro">
           <p className="tools-intro-tag">{t("tools.intro")}</p>
@@ -223,11 +227,11 @@ export default async function Home({
         </Reveal>
       </section>
 
-      {/* Features — sticky stack */}
-      <section id="programa" className="features-shell">
-        <Reveal className="features-intro">
-          <p className="features-intro-tag">{t("features.intro")}</p>
-          <h2 className="features-intro-title">
+      {/* Program — same 3 pillars, restyled cards */}
+      <section id="programa" className={styles.programShell}>
+        <Reveal className={styles.programIntro}>
+          <p className={styles.programTag}>{t("features.intro")}</p>
+          <h2 className={styles.programTitle}>
             {t("features.title")
               .split("\n")
               .map((line, i) => (
@@ -239,141 +243,158 @@ export default async function Home({
           </h2>
         </Reveal>
 
-        <div className="features-stack">
-          {t.raw("features.items").map((f: any, idx: number) => (
-            <article
-              key={idx}
-              className={`feature-card feature-card-${idx + 1}`}
-            >
-              <div>
-                <div className="feature-num">{`0${idx + 1}`} / 03</div>
-                <span className="feature-tag">{f.tag}</span>
-                <h3 className="feature-title">{f.title}</h3>
-                <p className="feature-body">{f.body}</p>
+        <div className={styles.programGrid}>
+          {features.map((f, idx) => (
+            <Reveal key={f.title} delay={idx * 0.08}>
+              <div className={styles.programCard}>
+                <div className={styles.programIcon} aria-hidden="true">
+                  {idx === 0 && (
+                    <svg viewBox="0 0 24 24">
+                      <path d="M9 18h6" />
+                      <path d="M10 21h4" />
+                      <path d="M12 3a6 6 0 0 0-4 10.5c.8.8 1.2 1.5 1.2 2.5h5.6c0-1 .4-1.7 1.2-2.5A6 6 0 0 0 12 3z" />
+                    </svg>
+                  )}
+                  {idx === 1 && (
+                    <svg viewBox="0 0 24 24">
+                      <path d="M3 21h18" />
+                      <path d="M3 17h4v4" />
+                      <path d="M8 13h4v8" />
+                      <path d="M13 9h4v12" />
+                      <path d="M18 4h3v17" />
+                    </svg>
+                  )}
+                  {idx === 2 && (
+                    <svg viewBox="0 0 24 24">
+                      <circle cx="12" cy="12" r="9" />
+                      <circle cx="12" cy="12" r="5" />
+                      <circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none" />
+                    </svg>
+                  )}
+                </div>
+                <span className={styles.programCardTag}>{f.tag}</span>
+                <h3 className={styles.programCardTitle}>{f.title}</h3>
+                <p className={styles.programCardBody}>{f.body}</p>
               </div>
-              <div className="feature-icon" aria-hidden="true">
-                {idx === 0 && (
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M9 18h6" />
-                    <path d="M10 21h4" />
-                    <path d="M12 3a6 6 0 0 0-4 10.5c.8.8 1.2 1.5 1.2 2.5h5.6c0-1 .4-1.7 1.2-2.5A6 6 0 0 0 12 3z" />
-                  </svg>
-                )}
-                {idx === 1 && (
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M3 21h18" />
-                    <path d="M3 17h4v4" />
-                    <path d="M8 13h4v8" />
-                    <path d="M13 9h4v12" />
-                    <path d="M18 4h3v17" />
-                  </svg>
-                )}
-                {idx === 2 && (
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <circle cx="12" cy="12" r="9" />
-                    <circle cx="12" cy="12" r="5" />
-                    <circle
-                      cx="12"
-                      cy="12"
-                      r="1.5"
-                      fill="currentColor"
-                      stroke="none"
-                    />
-                  </svg>
-                )}
-              </div>
-            </article>
+            </Reveal>
           ))}
         </div>
       </section>
 
-      {/* Pricing */}
-      <section className="pricing-shell">
-        <div className="pricing-bg" aria-hidden="true" />
-
-        <Reveal>
-          <p className="pricing-eyebrow">{t("pricing.eyebrow")}</p>
-          <h2 className="pricing-headline">
-            {t("pricing.headline")
-              .split("\n")
-              .map((line, i) => (
-                <span key={i}>
-                  {line}
-                  {i === 0 && <br />}
-                </span>
-              ))}
-          </h2>
-        </Reveal>
-
-        <Reveal delay={0.15}>
-          <div className="pricing-card">
-            <span className="pricing-badge">{t("pricing.badge")}</span>
-
-            <p className="pricing-tag">{t("pricing.tag")}</p>
-
-            <div className="pricing-price-row">
-              <span className="pricing-price">
-                {t("pricing.price")}
-                <sup className="text-sm align-super">
-                  {t("pricing.priceDecimal")}
-                </sup>
-                €
-              </span>
-              <span className="pricing-price-unit">{t("pricing.unit")}</span>
-            </div>
-            <p className="pricing-sub">{t("pricing.sub")}</p>
-
-            <div className="pricing-divider" />
-
-            <div>
-              {t.raw("pricing.features").map((b: string) => (
-                <div key={b} className="pricing-feature">
-                  <span className="pricing-check" aria-hidden="true">
-                    <svg viewBox="0 0 24 24">
-                      <polyline points="5 12 10 17 19 8" />
-                    </svg>
-                  </span>
-                  <span className="pricing-feature-text">{b}</span>
-                </div>
-              ))}
-            </div>
-
-            <Link href="/login" className="pricing-cta">
-              {t("pricing.cta")}
-            </Link>
-            <p className="pricing-fineprint">{t("pricing.fineprint")}</p>
-          </div>
-        </Reveal>
-      </section>
-
-      {/* Why choose */}
-      <section className="px-6 py-20">
-        <div className="max-w-md mx-auto space-y-8">
-          <Reveal>
-            <h2 className="text-3xl font-bold leading-tight text-center">
-              {t("whyChoose.title")}
-            </h2>
+      {/* Combo — countdown + subscription */}
+      <section className={styles.comboShell}>
+        <div className={styles.comboGrid}>
+          <Reveal className={styles.comboCountdown}>
+            <span className={styles.tickerKicker}>
+              <span className={styles.tickerKickerBar} />
+              {t2("hero.kicker")}
+            </span>
+            <p className={styles.tickerLabel}>{t2("countdown.label")}</p>
+            <p className={styles.tickerCaption}>{t2("countdown.caption")}</p>
+            <Countdown
+              labels={{
+                days: t2("countdown.days"),
+                hours: t2("countdown.hours"),
+                minutes: t2("countdown.minutes"),
+                seconds: t2("countdown.seconds"),
+              }}
+            />
           </Reveal>
-          <ul className="space-y-5">
-            {t.raw("whyChoose.items").map((why: string, i: number) => (
-              <Reveal key={why} delay={i * 0.08} y={24}>
-                <li className="flex items-start gap-3 border-l-2 border-accent/40 pl-4">
-                  <span className="text-base leading-snug">{why}</span>
-                </li>
-              </Reveal>
-            ))}
-          </ul>
-          <p className="text-center text-sm text-muted">
-            {t("whyChoose.intro")}{" "}
-            <Link href="/que-es-athx" className="text-accent underline">
-              {t("whyChoose.introLink")}
-            </Link>
-            .
-          </p>
+
+          <Reveal delay={0.1}>
+            <div className="pricing-card">
+              <span className="pricing-badge">{t("pricing.badge")}</span>
+              <p className="pricing-tag">{t("pricing.tag")}</p>
+              <div className="pricing-price-row">
+                <span className="pricing-price">
+                  {t("pricing.price")}
+                  <sup className="text-sm align-super">
+                    {t("pricing.priceDecimal")}
+                  </sup>
+                  €
+                </span>
+                <span className="pricing-price-unit">{t("pricing.unit")}</span>
+              </div>
+              <p className="pricing-sub">{t("pricing.sub")}</p>
+              <div className="pricing-divider" />
+              <div>
+                {t.raw("pricing.features").map((b: string) => (
+                  <div key={b} className="pricing-feature">
+                    <span className="pricing-check" aria-hidden="true">
+                      <svg viewBox="0 0 24 24">
+                        <polyline points="5 12 10 17 19 8" />
+                      </svg>
+                    </span>
+                    <span className="pricing-feature-text">{b}</span>
+                  </div>
+                ))}
+              </div>
+              <Link href="/login" className="pricing-cta">
+                {t("pricing.cta")}
+              </Link>
+              <p className="pricing-fineprint">{t("pricing.fineprint")}</p>
+            </div>
+          </Reveal>
         </div>
       </section>
 
-      {/* FAQ */}
+      {/* Events calendar + movements + why choose */}
+      <section className={styles.eventsShell}>
+        <div className={styles.eventsGrid}>
+          <Reveal>
+            <a
+              href="https://athxgames.com/events"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.eventsImageCard}
+              aria-label={t2("events.cta")}
+            >
+              <div className={styles.eventsImageInner}>
+                <h2 className={styles.eventsImageTitle}>{t2("events.title")}</h2>
+                <p className={styles.eventsImageBody}>{t2("events.body")}</p>
+                <span className={styles.eventsImageCta}>
+                  {t2("events.cta")}
+                  <ExternalIcon />
+                </span>
+              </div>
+            </a>
+          </Reveal>
+
+          <div className={styles.eventsRightCol}>
+            <Reveal>
+              <Link href="/movimientos-2027" className={styles.movementsCard}>
+                <h2 className={styles.movementsCardTitle}>
+                  {t2("movements.title")}
+                </h2>
+                <p className={styles.movementsCardBody}>{t2("movements.body")}</p>
+                <span className={styles.movementsCardCta}>
+                  {t2("movements.cta")}
+                  <ArrowIcon />
+                </span>
+              </Link>
+            </Reveal>
+
+            <Reveal delay={0.08}>
+              <div className={styles.whyCard}>
+                <h2 className={styles.whyCardTitle}>{t("whyChoose.title")}</h2>
+                <ul className={styles.whyList}>
+                  {whyItems.map((why) => (
+                    <li key={why} className={styles.whyItem}>
+                      {why}
+                    </li>
+                  ))}
+                </ul>
+                <p className={styles.whyFootnote}>
+                  {t("whyChoose.intro")}{" "}
+                  <Link href="/que-es-athx">{t("whyChoose.introLink")}</Link>.
+                </p>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ — unchanged */}
       <section className="px-6 py-20">
         <div className="max-w-md mx-auto space-y-6">
           <Reveal>
@@ -399,36 +420,27 @@ export default async function Home({
         </div>
       </section>
 
-      {/* Footer CTA */}
-      <section className="px-6 py-20">
-        <Reveal className="max-w-md mx-auto text-center space-y-6">
-          <h2 className="text-4xl font-bold leading-tight">
-            {t("footer.cta")
-              .split("\n")
-              .map((line, i) => (
-                <span key={i}>
-                  {line}
-                  {i === 0 && <br />}
-                </span>
-              ))}
+      {/* Closing CTA — ATHX 2027 */}
+      <section className={styles.closing}>
+        <div className={styles.closingVignette} aria-hidden="true" />
+        <Reveal className={styles.closingInner}>
+          <h2 className={styles.closingTitle}>
+            {t2("closing.titleLine1")}
+            <br />
+            {t2("closing.titleLine2")}
           </h2>
-          <Link
-            href="/login"
-            className="inline-block w-full py-3.5 rounded-xl text-base font-semibold btn-gradient"
-          >
-            {t("footer.ctaButton")}
+          <p className={styles.closingBody}>{t2("closing.body")}</p>
+          <Link href="/login" className={styles.closingCta}>
+            {t2("closing.cta")}
           </Link>
-          <p className="text-muted text-xs">{t("footer.ctaFineprint")}</p>
+          <p className={styles.closingFineprint}>{t2("closing.fineprint")}</p>
         </Reveal>
       </section>
 
-      {/* Legal footer */}
+      {/* Legal footer — unchanged */}
       <footer className="px-6 pt-6 pb-10 border-t border-white/5">
         <div className="max-w-md mx-auto flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-muted">
-          <Link
-            href="/privacidad"
-            className="hover:text-white transition-colors"
-          >
+          <Link href="/privacidad" className="hover:text-white transition-colors">
             {t("footer.privacy")}
           </Link>
           <Link href="/terminos" className="hover:text-white transition-colors">

@@ -1,0 +1,153 @@
+.page {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.intro {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 6rem 1.5rem 3.5rem;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-weight: 600;
+  color: var(--accent-green);
+}
+
+.title {
+  margin-top: 0.75rem;
+  font-family: var(--font-league-spartan), system-ui, sans-serif;
+  font-weight: 800;
+  font-size: clamp(2.2rem, 7vw, 3.2rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.introBody {
+  margin-top: 1.25rem;
+  font-size: 1.02rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  max-width: 60ch;
+}
+
+.introLinks {
+  margin-top: 1.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.officialLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.65rem 1.1rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  transition: border-color 0.2s ease;
+}
+
+.officialLink:hover {
+  border-color: rgba(255, 255, 255, 0.32);
+}
+
+.officialLink svg {
+  width: 13px;
+  height: 13px;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.65rem 1.1rem;
+  border-radius: 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #000;
+  background: var(--accent-green);
+}
+
+.zone {
+  padding: 3.25rem 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.zoneInner {
+  max-width: 52rem;
+  margin: 0 auto;
+}
+
+.zoneTag {
+  display: inline-block;
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-weight: 700;
+  color: #000;
+  background: var(--accent-green);
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+}
+
+.zoneTitle {
+  margin-top: 1rem;
+  font-family: var(--font-league-spartan), system-ui, sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.6rem, 5vw, 2.1rem);
+  letter-spacing: -0.02em;
+}
+
+.zoneBlurb {
+  margin-top: 0.5rem;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  max-width: 56ch;
+}
+
+.movementList {
+  margin-top: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.movementStandards {
+  margin-top: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.movementStandard {
+  padding-left: 0.85rem;
+  border-left: 2px solid rgba(44, 255, 5, 0.35);
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.equipmentNote {
+  margin-top: 1.25rem;
+  padding: 1rem 1.25rem;
+  border-radius: 1rem;
+  border: 1px dashed rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.02);
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.equipmentNote strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}

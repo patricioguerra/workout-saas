@@ -9,12 +9,12 @@
     "switchTo": "Switch to {lang}"
   },
   "queEsAthx": {
-    "pageTitle": "What is ATHX: athlete guide for 2026",
-    "pageDescription": "ATHX is the functional fitness competition ATHLEX Training trains for. Learn what ATHX is, the 3 events (Strength, Endurance, MetCon X), ATHX and ATHX PRO categories, and how to prepare for ATHX 2026 with official programming.",
-    "ogTitle": "What is ATHX: athlete guide for 2026",
+    "pageTitle": "What is ATHX: athlete guide for 2027",
+    "pageDescription": "ATHX is the functional fitness competition ATHLEX Training trains for. Learn what ATHX is, the 3 events (Strength, Endurance, MetCon X), ATHX and ATHX PRO categories, and how to prepare for ATHX 2027 with official programming.",
+    "ogTitle": "What is ATHX: athlete guide for 2027",
     "ogDescription": "What ATHX is, competition format, categories, and how to prepare.",
     "eyebrow": "ATHX Guide",
-    "title": "What is ATHX and how to prepare for ATHX 2026",
+    "title": "What is ATHX and how to prepare for ATHX 2027",
     "intro": "ATHX is the functional fitness competition we train our athletes for. This guide explains the format, categories (ATHX and ATHX PRO), and how to build an <strong>ATHX programming plan</strong> that gets you to the podium.",
     "sections": {
       "format": {
@@ -47,8 +47,8 @@
           "answer": "With sport-specific ATHX programming: periodization in BASE, BUILD, PEAK, and DELOAD, calibrated by RPE and % 1RM. ATHLEX Training delivers a weekly plan Monday through Sunday, warm-up, strength and MetCon each day, plus direct chat with coach."
         },
         "q5": {
-          "question": "When is ATHX 2026?",
-          "answer": "Official ATHX 2026 dates are announced on the competition's official channels. Our programming is aligned to the competition calendar."
+          "question": "When is ATHX 2027?",
+          "answer": "Official ATHX 2027 dates are announced on the competition's official channels. Our programming is aligned to the competition calendar."
         }
       }
     },
@@ -518,6 +518,120 @@
     "stop": "Stop"
   },
   "home": {
+    "tools": {
+      "intro": "Tools",
+      "title": "Everything you need.",
+      "titleEm": "In your pocket.",
+      "chat": {
+        "tag": "Direct messaging",
+        "title": "Your coach one message away",
+        "body": "Questions about technique, scaling, pain — ask freely and get answers from the ATHLEX team the same day.",
+        "coachName": "ATHLEX",
+        "coachStatus": "online",
+        "bubble1": "How was your Back Squat today?",
+        "bubble2": "5×5 at 110 kg, RPE 7. Had one left.",
+        "bubble3": "Perfect. We'll go to 115 tomorrow. 🔥",
+        "bubble4": "Let's go!",
+        "inputPlaceholder": "Type a message…"
+      },
+      "timer": {
+        "tag": "Built-in timer",
+        "title": "AMRAP, EMOM, For Time",
+        "body": "Competition modes ready in 2 taps. Beeps per round, screen always awake, and one-handed control.",
+        "mode": "FOR TIME",
+        "time": "07:42",
+        "round": "Round 3 / 4"
+      }
+    },
+    "features": {
+      "intro": "The program",
+      "title": "ATHX Programming:\nthree pillars, zero filler.",
+      "items": [
+        {
+          "tag": "ATHX Specific",
+          "title": "Built for ATHX Games",
+          "body": "Every week and cycle targets the 3 events: Strength, Endurance, and MetCon X. No fluff."
+        },
+        {
+          "tag": "Pro methodology",
+          "title": "4-phase periodization",
+          "body": "BASE, BUILD, PEAK, and DELOAD. Progressive load calibrated by RPE and % 1RM. Science does the work."
+        },
+        {
+          "tag": "Key day",
+          "title": "Better than the rest",
+          "body": "The cycle ends with full-event simulations. Initial and final testing to measure real progress."
+        }
+      ]
+    },
+    "pricing": {
+      "eyebrow": "Simple pricing",
+      "headline": "One program.\nOne price.",
+      "badge": "Popular",
+      "tag": "ATHX 2027 Program",
+      "price": "9",
+      "priceDecimal": ".80",
+      "unit": "/month",
+      "sub": "Cancel anytime.",
+      "features": [
+        "Programming and individual tracking",
+        "2 categories: ATHX and ATHX PRO",
+        "Weekly plan Monday through Sunday",
+        "Warm-up, strength, and MetCon each day",
+        "First week free"
+      ],
+      "cta": "Subscribe",
+      "fineprint": "No commitment"
+    },
+    "whyChoose": {
+      "title": "Why choose ATHLEX for your ATHX training",
+      "intro": "New to competition?",
+      "introLink": "Start with what is ATHX",
+      "items": [
+        "Clear structure built for you",
+        "Real progression: loads go up, times come down.",
+        "Competition movements from week 1.",
+        "Designed from experience",
+        "Logging and leaderboard to track your progress"
+      ]
+    },
+    "faq": {
+      "title": "FAQ",
+      "items": {
+        "q1": {
+          "question": "Do I need prior experience?",
+          "answer": "Yes, prior knowledge is recommended. The program assumes mastery of the movements included this year."
+        },
+        "q2": {
+          "question": "What equipment do I need?",
+          "answer": "Standard box: Olympic barbell, dumbbells, sandbag, box jump, ski-erg, or rowing machine."
+        },
+        "q3": {
+          "question": "How long is each session?",
+          "answer": "Between 60 and 90 minutes."
+        },
+        "q4": {
+          "question": "What's the difference between ATHX and ATHX PRO?",
+          "answer": "PRO has higher work capacity and workouts tend to run a bit longer."
+        },
+        "q5": {
+          "question": "How do I cancel?",
+          "answer": "From your profile, one click. Cancel anytime. You keep access until the end of your paid period."
+        }
+      }
+    },
+    "footer": {
+      "cta": "Your next PR\nstarts Monday.",
+      "ctaButton": "Start now",
+      "ctaFineprint": "First week free",
+      "privacy": "Privacy",
+      "terms": "Terms",
+      "cookiePolicy": "Cookies",
+      "support": "Support",
+      "copyright": "© ATHLEX Training"
+    }
+  },
+  "homeClasica": {
     "hero": {
       "srOnlyDesc": "ATHLEX Training — ATHX training and programming for athletes preparing for ATHX 2026 in Spain and Latin America.",
       "eyebrow": "ATHX™ Training by ATHLEX",
@@ -640,6 +754,178 @@
       "cookiePolicy": "Cookies",
       "support": "Support",
       "copyright": "© ATHLEX Training"
+    }
+  },
+  "season2027": {
+    "pageTitle": "ATHX™ 2027: the season is getting closer",
+    "pageDescription": "New venues and dates for ATHX™ 2027 already announced. Start your prep with ATHLEX Training.",
+    "hero": {
+      "eyebrow": "ATHX™ · 2027 Season",
+      "kicker": "New venues. New calendar.",
+      "titleLine1": "THE 2027 SEASON",
+      "titleLine2": "IS GETTING CLOSER.",
+      "subtitle": "ATHX™ confirms new venues and dates. Start your prep with ATHLEX Training before the year kicks off.",
+      "cta": "Start your prep",
+      "scrollCue": "Program"
+    },
+    "countdown": {
+      "label": "Your next phase starts in",
+      "caption": "Every cycle starts on Monday. The next one can be yours.",
+      "days": "days",
+      "hours": "h",
+      "minutes": "min",
+      "seconds": "s"
+    },
+    "events": {
+      "title": "New ATHX™ 2027 calendar",
+      "body": "New competition venues and dates already announced.",
+      "cta": "View official events"
+    },
+    "movements": {
+      "title": "This season's movements",
+      "body": "What counts as a valid rep in each zone: Strength, Endurance and MetCon X.",
+      "cta": "See the movements"
+    },
+    "closing": {
+      "titleLine1": "Your 2027 starts",
+      "titleLine2": "next Monday.",
+      "body": "New venues. New calendar. The same standard as always. Get ready with ATHLEX Training.",
+      "cta": "Start now",
+      "fineprint": "First week free. No commitment."
+    }
+  },
+  "movements2027": {
+    "pageTitle": "ATHX™ 2027 movements: standards by zone",
+    "pageDescription": "Reference guide to ATHX™ movements and technical standards: Strength, Endurance and MetCon X. Get ready with ATHLEX Training.",
+    "ogTitle": "ATHX™ 2027 movements: standards by zone",
+    "ogDescription": "What counts as a valid rep in each ATHX™ movement, zone by zone.",
+    "eyebrow": "ATHX™ Movements",
+    "title": "The movements you'll see in 2027",
+    "intro": "A zone-by-zone reference: what counts as a valid rep, what equipment is allowed, and how each block is scored. Based on the most recent known rulebook — always check ATHX™'s official rules.",
+    "officialLink": "See official rules",
+    "zones": [
+      {
+        "key": "strength",
+        "tag": "Strength Zone",
+        "title": "Max strength",
+        "blurb": "Three lifts, three attempts at a valid rep. This is where the base work pays off.",
+        "equipmentNote": "Allowed: chalk, knee sleeves, elbow sleeves, belt, weightlifting shoes. Not allowed: straps, grips, knee/elbow wraps.",
+        "movements": [
+          {
+            "name": "Strict Press",
+            "standards": [
+              "Bar starts on the rack in front rack.",
+              "Valid rep: bar overhead with hips and knees extended.",
+              "Any dip, jerk, or leg bounce voids the rep.",
+              "Bar returns to the rack when finished."
+            ]
+          },
+          {
+            "name": "Back Squat",
+            "standards": [
+              "Bar in back rack, full extension at the start of each rep.",
+              "Hip crease below the knee on every descent.",
+              "Valid rep on standing up to full extension.",
+              "Dropping or throwing the bar voids the score."
+            ]
+          },
+          {
+            "name": "Deadlift",
+            "standards": [
+              "Every rep starts on the floor, hands outside the knees.",
+              "Free grip: pronated, mixed, or hook.",
+              "Valid rep with hips and knees extended, no bounce.",
+              "Max pause between reps: 5 seconds."
+            ]
+          }
+        ]
+      },
+      {
+        "key": "endurance",
+        "tag": "Endurance Zone",
+        "title": "Endurance",
+        "blurb": "Run and row combined against the clock. Whoever covers the most distance wins.",
+        "equipmentNote": "",
+        "movements": [
+          {
+            "name": "Run",
+            "standards": [
+              "Discipline switch every 750 m (ATHX™) or 1000 m (PRO).",
+              "At minute 22 the current lap is finished and the clock stops.",
+              "Scored on total distance covered, not time."
+            ]
+          },
+          {
+            "name": "Row",
+            "standards": [
+              "Free damper setting, adjustable before and during.",
+              "Same discipline-switch pattern as the run.",
+              "The meter counter doesn't reset between switches."
+            ]
+          }
+        ]
+      },
+      {
+        "key": "metconx",
+        "tag": "MetCon X Zone",
+        "title": "Mixed",
+        "blurb": "Six movements, one circuit. This is where real competition-pattern training shows.",
+        "equipmentNote": "Shoes mandatory, one pair of knee sleeves max. No grips, no headphones.",
+        "movements": [
+          {
+            "name": "Ski-Erg",
+            "standards": [
+              "Full calories completed before releasing the handles.",
+              "Releasing the handle in a way that causes damage draws a 30s penalty."
+            ]
+          },
+          {
+            "name": "Ground to Overhead",
+            "standards": [
+              "ATHX™: single dumbbell, snatch or clean & jerk, alternating arms after each valid rep.",
+              "PRO: both dumbbells at once from the floor.",
+              "Valid rep with hips, knees, and arms extended over the body's centerline."
+            ]
+          },
+          {
+            "name": "Sandbag Carry",
+            "standards": [
+              "30 m course (there and back).",
+              "If dropped, pick it up and restart from the line.",
+              "Any carry method is valid."
+            ]
+          },
+          {
+            "name": "Box Jump Overs",
+            "standards": [
+              "Two-foot takeoff required, both feet land on the box.",
+              "Free descent: jump down or step down.",
+              "Jump only in the lane's direction."
+            ]
+          },
+          {
+            "name": "Burpee Broad Jumps",
+            "standards": [
+              "Chest touches the floor on every rep.",
+              "Broad jump with simultaneous two-foot takeoff and landing.",
+              "Hands land within 33 cm of the feet for the next burpee."
+            ]
+          },
+          {
+            "name": "Walking Lunges",
+            "standards": [
+              "ATHX™: dumbbells in a suitcase hold at the sides.",
+              "PRO: dumbbells in front rack.",
+              "Back knee touches the floor on every step, no shuffle steps."
+            ]
+          }
+        ]
+      }
+    ],
+    "closing": {
+      "title": "Now you know what's coming. Time to train for it.",
+      "body": "ATHLEX Training turns every one of these standards into your weekly plan.",
+      "cta": "Start your prep"
     }
   },
   "emails": {
